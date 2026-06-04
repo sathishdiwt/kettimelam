@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini Marathon Fest'26 — Registration Report</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<title>Mini Marathon Fest'26 — Live Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0d0f14;--surface:#161921;--card:#1c2030;--border:#ffffff12;
-  --text:#f0f2f7;--muted:#7a8099;--hint:#3e4358;
+  --text:#f0f2f7;--muted:#7a8099;--hint:#2e3347;
   --orange:#ff6b35;--orange-dim:#ff6b3520;
   --blue:#4a9eff;--blue-dim:#4a9eff18;
   --pink:#ff4d8d;--pink-dim:#ff4d8d18;
@@ -22,15 +22,32 @@
 }
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;font-size:14px;line-height:1.5}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0}
-
 .wrap{max-width:1200px;margin:0 auto;padding:2rem 1.25rem;position:relative;z-index:1}
 
 /* header */
 .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:6px}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:.04em;line-height:1;color:var(--text)}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:.04em;line-height:1}
 h1 span{color:var(--orange)}
 .subtitle{color:var(--muted);font-size:13px;margin-top:6px}
-.gen-time{font-size:11px;color:var(--hint);margin-top:3px}
+.status-row{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:4px 12px;border-radius:100px;border:0.5px solid var(--border);color:var(--muted)}
+.status-pill.live{border-color:#3de68a40;color:var(--green)}
+.status-pill.loading{border-color:#ffbe3d40;color:var(--amber)}
+.status-pill.error{border-color:#ff5c5c40;color:var(--red)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.dot.pulse{animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.refresh-btn{border:0.5px solid var(--border);background:transparent;color:var(--muted);padding:4px 14px;border-radius:100px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .15s}
+.refresh-btn:hover{border-color:var(--orange);color:var(--orange)}
+.refresh-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* loader skeleton */
+.skeleton{background:linear-gradient(90deg,var(--card) 25%,var(--hint) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:var(--r)}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:2rem 0 1.5rem}
+.skel-block{height:72px}
+.skel-chart{height:140px;margin-bottom:10px}
+.skel-table{height:300px}
 
 /* metrics */
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:2rem 0 1.5rem}
@@ -44,7 +61,7 @@ h1 span{color:var(--orange)}
 .chart-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);padding:1.1rem}
 .chart-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:.9rem}
 .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.bar-lbl{font-size:12px;color:var(--text);min-width:56px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-lbl{font-size:12px;color:var(--text);min-width:56px;white-space:nowrap}
 .bar-track{flex:1;background:#ffffff0d;border-radius:4px;height:9px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
 .bar-n{font-size:12px;color:var(--muted);min-width:18px;text-align:right}
@@ -74,14 +91,13 @@ h1 span{color:var(--orange)}
 .tbl-count{font-size:11px;color:var(--muted)}
 .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
-th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:9px 12px;text-align:left;border-bottom:0.5px solid var(--border);cursor:pointer;user-select:none;position:sticky;top:0;background:var(--card);z-index:2}
+th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:9px 12px;text-align:left;border-bottom:0.5px solid var(--border);cursor:pointer;user-select:none;background:var(--card)}
 th:hover{color:var(--text)}
-th .sort-icon{margin-left:4px;opacity:.4;font-size:9px}
-th.sorted .sort-icon{opacity:1;color:var(--orange)}
+th.sorted{color:var(--orange)}
 td{padding:9px 12px;border-bottom:0.5px solid var(--border);vertical-align:middle;color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:#ffffff04}
-td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px}
+td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px;font-size:11px;color:var(--muted)}
 .no-result{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
 
 /* badges */
@@ -94,7 +110,7 @@ td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px}
 .bmed-no{background:var(--green-dim);color:var(--green)}
 .bmed-yes{background:var(--red-dim);color:var(--red)}
 .bmed-norm{background:var(--teal-dim);color:var(--teal)}
-.bpay{display:inline-flex;align-items:center;gap:4px;background:var(--orange-dim);color:var(--orange);padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600;text-decoration:none;cursor:pointer}
+.bpay{display:inline-flex;align-items:center;gap:4px;background:var(--orange-dim);color:var(--orange);padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600;text-decoration:none}
 .bpay:hover{background:var(--orange);color:#fff}
 .b-bg{background:var(--purple-dim);color:var(--purple)}
 
@@ -113,6 +129,10 @@ td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px}
 .detail-key{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
 .detail-val{font-size:13px;color:var(--text);word-break:break-word}
 
+/* error state */
+.error-box{background:var(--red-dim);border:0.5px solid #ff5c5c30;border-radius:var(--rl);padding:1.5rem;text-align:center;color:var(--red);margin:2rem 0}
+.error-box p{font-size:13px;margin-top:8px;color:var(--muted)}
+
 footer{text-align:center;font-size:11px;color:var(--muted);padding-bottom:2rem}
 footer span{color:var(--orange)}
 
@@ -125,41 +145,62 @@ footer span{color:var(--orange)}
   <header style="margin-bottom:1.5rem">
     <div class="eyebrow">Perambalur · June 28, 2026</div>
     <h1>Mini Marathon <span>Fest'26</span></h1>
-    <div class="subtitle">Registration Report — All Fields</div>
-    <div class="gen-time" id="genTime"></div>
+    <div class="subtitle">Registration Report — Live from Google Sheets</div>
+    <div class="status-row">
+      <div class="status-pill loading" id="statusPill"><span class="dot pulse"></span><span id="statusText">Connecting to Google Drive…</span></div>
+      <button class="refresh-btn" id="refreshBtn" onclick="loadData()" disabled>↺ Refresh</button>
+      <span style="font-size:11px;color:var(--muted)" id="lastFetch"></span>
+    </div>
   </header>
 
-  <div class="metrics" id="metrics"></div>
-  <div class="charts-row" id="charts"></div>
-
-  <div class="filters" id="filters"></div>
-
-  <div class="search-wrap">
-    <span class="search-icon">⌕</span>
-    <input type="text" id="searchBox" placeholder="Search by name, address, email, blood group…" oninput="render()">
+  <div id="mainContent">
+    <!-- skeleton loader -->
+    <div class="skel-metrics" id="skelMetrics">
+      ${Array(5).fill('<div class="skeleton skel-block"></div>').join('')}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem">
+      ${Array(4).fill('<div class="skeleton skel-chart"></div>').join('')}
+    </div>
+    <div class="skeleton skel-table"></div>
   </div>
 
-  <div class="tbl-wrap">
-    <div class="tbl-header">
-      <span class="tbl-title">All Participants</span>
-      <span class="tbl-count" id="tblCount"></span>
+  <div id="reportContent" style="display:none">
+    <div class="metrics" id="metrics"></div>
+    <div class="charts-row" id="charts"></div>
+    <div class="filters" id="filters"></div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="searchBox" placeholder="Search name, email, address, blood group…" oninput="render()">
     </div>
-    <div class="tbl-scroll">
-      <table>
-        <thead>
-          <tr id="thead"></tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
+    <div class="tbl-wrap">
+      <div class="tbl-header">
+        <span class="tbl-title">All Participants</span>
+        <span class="tbl-count" id="tblCount"></span>
+      </div>
+      <div class="tbl-scroll">
+        <table>
+          <thead><tr id="thead"></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <footer>Mini Marathon Fest'26 &nbsp;·&nbsp; Perambalur &nbsp;·&nbsp; <span>7Kettimelam Eeventmanagement</span></footer>
+  <div id="errorContent" style="display:none">
+    <div class="error-box">
+      <div style="font-size:1.5rem">⚠️</div>
+      <div style="font-weight:600;margin-top:8px" id="errTitle">Could not load data</div>
+      <p id="errMsg">Please check your connection and try again.</p>
+      <button class="refresh-btn" onclick="loadData()" style="margin-top:1rem;color:var(--red);border-color:var(--red)">↺ Retry</button>
+    </div>
+  </div>
+
+  <footer>Mini Marathon Fest'26 &nbsp;·&nbsp; Perambalur &nbsp;·&nbsp; <span>786 Spices Group</span></footer>
 </div>
 
 <!-- Detail Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
+  <div class="modal">
     <div class="modal-head">
       <span class="modal-name" id="modalName"></span>
       <button class="modal-close" onclick="closeModal()">✕</button>
@@ -169,82 +210,190 @@ footer span{color:var(--orange)}
 </div>
 
 <script>
-const DATA = [
-  {ts:"15/05/2026 23:05",name:"Sample",age:35,gender:"Male",whatsapp:"9994247469",emergency:"7708231559",blood:"A+",email:"physicaldir@gmail.com",address:"Melapuliyur post perambalur district",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"No",payment:"https://drive.google.com/open?id=1mhVENCyd2H_KNP79EGgam_fSX4mmzGqU"},
-  {ts:"16/05/2026 13:20",name:"VENKATESAN S",age:41,gender:"Male",whatsapp:"997700732",emergency:"966787650",blood:"O+",email:"shreemeenakshi1@gmail.com",address:"1/534 JMC Compound, Thuraiyur Road, N.Kosavampatti, Namakkal-637002",category:"Adult",distance:"4 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=1APcSq9fre4spVoSgdlS7N-D89-HkTX8C"},
-  {ts:"18/05/2026 16:01",name:"Manisha K",age:16,gender:"Female",whatsapp:"7639465676",emergency:"9443807443",blood:"A+",email:"Kumarmalathi122@gmail.com",address:"184A 3rd Ward Aadhidhiravidar Street Elambalur, Perambalur District",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"Good",payment:"https://drive.google.com/open?id=1ZVxqbmvBM7O2k6_CM4QMmv_8URleBX9_"},
-  {ts:"19/05/2026 15:55",name:"Check Kayal",age:35,gender:"Female",whatsapp:"7708231559",emergency:"9994247469",blood:"AB+",email:"kayalkavis@gmail.com",address:"Main road, Melapuliyur",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"No",payment:"https://drive.google.com/open?id=1ogRmEOqapDwqmLvyugokIasgnunMfhb-"},
-  {ts:"23/05/2026 18:52",name:"DEVI L",age:25,gender:"Female",whatsapp:"9943699703",emergency:"9688725239",blood:"O+",email:"—",address:"41A, Thiruvallur Street, Aranarai, Perambalur 621212",category:"Adult",distance:"4 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=1wMyd4YWGgz3hV1Pyt91OUj7ZE3vHcuAA"},
-  {ts:"27/05/2026 20:48",name:"S. Harish",age:15,gender:"Male",whatsapp:"9551717258",emergency:"9551717258",blood:"B+",email:"selvarasumaheswari8@gmail.com",address:"6/115, S.Kudikadu Village, Keelapuliyur Post, Kunnam TK, Perambalur-621115",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=17mJVL6RNwdfjdNThNFXqI5WaXcq2rTZc"},
-  {ts:"27/05/2026 20:56",name:"S. Harish (2)",age:15,gender:"Male",whatsapp:"9551717258",emergency:"9551717258",blood:"B+",email:"maheswariselvarasu467@gmail.com",address:"6/115 Kudikadu Village, Keelapuliyur Post, Kunnam Taluka, Perambalur District",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1XJIZMQ2fc3KEW-1qnt8vOosTUx-nYKr6"},
-  {ts:"28/05/2026 22:11",name:"Abimanya A",age:11,gender:"Female",whatsapp:"8056399814",emergency:"8056399814",blood:"A+",email:"Geethaarevalagan@gmail.com",address:"D/o G.Arivalagan, 5/315, North Str, Sirukudal PO, Kunnam TK, Perambalur-621115",category:"Kids",distance:"2 Km",tshirt:"S",medical:"Normal",payment:"https://drive.google.com/open?id=1qHvI9fa5f1HBl1TZHAvj9adTA2hHeIwI"},
-  {ts:"29/05/2026 13:28",name:"V. Srinivasan",age:15,gender:"Male",whatsapp:"9655140193",emergency:"9655140193",blood:"AB-",email:"sangeethasan146@gmail.com",address:"178, Mela Street, Mangalamedu, Veppanthattai, Perambalur-621115",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1_sXtR0rtOa_lMenG8SWrDqn9_eOGmAYe"},
-  {ts:"30/05/2026 12:03",name:"Gayathri",age:40,gender:"Female",whatsapp:"9976352935",emergency:"9487224193",blood:"O+",email:"bakigayu123@gmail.com",address:"3rd Cross Muthulakshmi Nagar, Opp. EB Office, Four Road, Perambalur",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"Good",payment:"https://drive.google.com/open?id=15qAfWRE9smzOMq2C5SP_WE2evrQYJBRU"},
-  {ts:"31/05/2026 14:39",name:"S. Dhashika",age:9,gender:"Female",whatsapp:"9786072149",emergency:"9626460354",blood:"O+",email:"Vithyasenthilkumar69@gmail.com",address:"202, East Street, Venganur Post, Udumbiyam, Veppanthattai Taluk, Perambalur-621116",category:"Kids",distance:"2 Km",tshirt:"M",medical:"Normal",payment:"https://drive.google.com/open?id=1ZNwW8mQuJ16NoHnPY1jmV9gyzn9qCALK"},
-  {ts:"31/05/2026 14:44",name:"S. Vithya",age:31,gender:"Female",whatsapp:"9786072149",emergency:"9626460354",blood:"O+",email:"Vithyasenthilkumar69@gmail.com",address:"202, East Street, Venganur Post, Udumbiyam, Veppanthattai Taluk, Perambalur-621116",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"Normal",payment:"https://drive.google.com/open?id=11FUOc6N_2h82Tx7c6SByA318oNuRV6ue"},
-  {ts:"31/05/2026 14:45",name:"U. Manikandan",age:36,gender:"Male",whatsapp:"9524362307",emergency:"8807212391",blood:"A+",email:"umapathymanigandan@gmail.com",address:"PN Palayam 5th Ward, Mellpattambakkam & Post, Panruti TK, Cuddalore District",category:"Adult",distance:"4 Km",tshirt:"L",medical:"Nil",payment:"https://drive.google.com/open?id=1lwiFlBMs3qu8oGgHP5HpHGJDZat1T3zc"},
-  {ts:"31/05/2026 15:37",name:"YUVAN S",age:12,gender:"Male",whatsapp:"8300750585",emergency:"8300750585",blood:"O+",email:"niveyuvan@gmail.com",address:"No. 3 Abhiramapuram, Opp. Collector Office Road, Perambalur-621212",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1H0__55jsK5PFjCY-ndIP9O9X-z-GP1Ak"},
-];
+const FILE_ID = "1y-IlI0GbCQQAkNMnhfSPBqo-u7uwbgHkW8LDNe0iwWM";
+const DRIVE_MCP = "https://drivemcp.googleapis.com/mcp/v1";
 
-const SIZES = ["S","M","L","XL"];
-const BLOOD = ["A+","A-","B+","B-","AB+","AB-","O+","O-"];
-const SIZE_C = {S:"#a78bfa",M:"#3de68a",L:"#ffbe3d",XL:"#ff6b35"};
-const BLOOD_C = {"A+":"#ff4d8d","A-":"#ff4d8d","B+":"#4a9eff","B-":"#4a9eff","AB+":"#a78bfa","AB-":"#a78bfa","O+":"#3de68a","O-":"#3de68a"};
-
+let DATA = [];
 let filters = {gender:"All",category:"All",tshirt:"All",blood:"All"};
 let sortKey = "ts", sortDir = 1;
 
-document.getElementById("genTime").textContent = "Generated: " + new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'});
+const SIZES = ["S","M","L","XL","XXL"];
+const BLOOD = ["A+","A-","B+","B-","AB+","AB-","O+","O-"];
+const SIZE_C = {S:"#a78bfa",M:"#3de68a",L:"#ffbe3d",XL:"#ff6b35",XXL:"#ff4d8d"};
+const BLOOD_C = {"A+":"#ff4d8d","A-":"#ff4d8d","B+":"#4a9eff","B-":"#4a9eff","AB+":"#a78bfa","AB-":"#a78bfa","O+":"#3de68a","O-":"#3de68a"};
 
-function cnt(arr,k){return arr.reduce((a,r)=>{a[r[k]]=(a[r[k]]||0)+1;return a;},{})}
-
-function medBadge(m){
-  const v=(m||"").toLowerCase().trim();
-  if(!v||v==="no"||v==="nil"||v==="none") return `<span class="badge bmed-no">None</span>`;
-  if(v==="normal"||v==="good") return `<span class="badge bmed-norm">${m}</span>`;
-  return `<span class="badge bmed-yes">${m}</span>`;
+// ── Status helpers ──────────────────────────────────────────────
+function setStatus(state, text) {
+  const pill = document.getElementById("statusPill");
+  const dot = pill.querySelector(".dot");
+  pill.className = "status-pill " + state;
+  dot.className = "dot" + (state === "loading" ? " pulse" : "");
+  document.getElementById("statusText").textContent = text;
 }
 
-function filtered(){
-  const q = document.getElementById("searchBox").value.toLowerCase().trim();
-  return DATA.filter(r=>{
-    if(filters.gender!=="All" && r.gender!==filters.gender) return false;
-    if(filters.category!=="All" && r.category!==filters.category) return false;
-    if(filters.tshirt!=="All" && r.tshirt!==filters.tshirt) return false;
-    if(filters.blood!=="All" && r.blood!==filters.blood) return false;
-    if(q && !JSON.stringify(r).toLowerCase().includes(q)) return false;
-    return true;
-  }).sort((a,b)=>{
-    let va=a[sortKey],vb=b[sortKey];
-    if(sortKey==="age"){va=+va;vb=+vb;}
-    if(va<vb) return -sortDir; if(va>vb) return sortDir; return 0;
+// ── Parse markdown table from Drive MCP ────────────────────────
+function parseMdTable(md) {
+  const lines = md.split("\n").map(l => l.trim()).filter(l => l.startsWith("|"));
+  if (lines.length < 3) return [];
+  const headers = lines[0].split("|").map(h => h.trim()).filter(Boolean);
+  const rows = lines.slice(2); // skip separator
+  return rows.map(row => {
+    const cells = row.split("|").map(c => c.trim()).filter(Boolean);
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = cells[i] || "");
+    return obj;
   });
 }
 
-function setFilter(k,v){
-  filters[k]=v;
-  document.querySelectorAll(`.frow[data-key="${k}"] .fbtn`).forEach(b=>b.classList.toggle('on',b.dataset.val===v));
-  document.getElementById('clrBtn').style.display=
-    Object.values(filters).some(x=>x!=='All')?'':'none';
+// ── Normalise a raw row into our clean record ──────────────────
+function normalise(raw) {
+  const get = (...keys) => {
+    for (const k of keys) {
+      const found = Object.keys(raw).find(rk => rk.toLowerCase().includes(k.toLowerCase()));
+      if (found && raw[found]) return raw[found].trim();
+    }
+    return "—";
+  };
+  return {
+    ts:        get("Timestamp"),
+    name:      get("Full Name", "Name"),
+    age:       get("Age"),
+    gender:    get("Gender"),
+    whatsapp:  get("Whatsapp", "WhatsApp"),
+    emergency: get("Emergency"),
+    blood:     get("Blood"),
+    email:     get("Email"),
+    address:   get("Address"),
+    category:  get("Category"),
+    distance:  get("Distance"),
+    tshirt:    get("T-shirt", "T-Shirt", "Shirt"),
+    medical:   get("Medical"),
+    payment:   get("Payment", "Screenshot"),
+  };
+}
+
+// ── Main fetch via Anthropic API + Drive MCP ───────────────────
+async function loadData() {
+  document.getElementById("refreshBtn").disabled = true;
+  document.getElementById("mainContent").style.display = "";
+  document.getElementById("reportContent").style.display = "none";
+  document.getElementById("errorContent").style.display = "none";
+  document.getElementById("mainContent").innerHTML = `
+    <div class="skel-metrics">${Array(5).fill('<div class="skeleton skel-block"></div>').join('')}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem">${Array(4).fill('<div class="skeleton skel-chart"></div>').join('')}</div>
+    <div class="skeleton skel-table"></div>`;
+  setStatus("loading", "Connecting to Google Drive…");
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 8000,
+        system: `You are a data extraction assistant. 
+Use the Google Drive MCP to read the spreadsheet file with ID: ${FILE_ID}.
+Call the read_file_content tool with fileId="${FILE_ID}".
+Then return ONLY a valid JSON array of objects — one object per participant row (skip the header and separator rows).
+Each object must have these exact keys:
+ts, name, age, gender, whatsapp, emergency, blood, email, address, category, distance, tshirt, medical, payment
+Map columns from the sheet to these keys.
+Return ONLY the JSON array. No explanation, no markdown fences, no other text.`,
+        messages: [{ role: "user", content: "Fetch all participant rows from the Google Sheet and return as JSON array." }],
+        mcp_servers: [{ type: "url", url: DRIVE_MCP, name: "google-drive" }]
+      })
+    });
+
+    if (!res.ok) throw new Error(`API error ${res.status}`);
+    const data = await res.json();
+
+    // Extract text from response
+    const textBlocks = data.content.filter(b => b.type === "text").map(b => b.text);
+    const fullText = textBlocks.join("\n");
+
+    // Find JSON array in response
+    const jsonMatch = fullText.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) throw new Error("No JSON array found in response");
+
+    const parsed = JSON.parse(jsonMatch[0]);
+    if (!Array.isArray(parsed) || parsed.length === 0) throw new Error("Empty or invalid data returned");
+
+    DATA = parsed.map(r => {
+      // If keys already match our schema, use directly; else normalise
+      return r.name !== undefined ? r : normalise(r);
+    });
+
+    document.getElementById("mainContent").style.display = "none";
+    document.getElementById("reportContent").style.display = "";
+    setStatus("live", `Live · ${DATA.length} registrations`);
+    document.getElementById("lastFetch").textContent = "Updated " + new Date().toLocaleTimeString('en-SG', {hour:'2-digit',minute:'2-digit'});
+    document.getElementById("refreshBtn").disabled = false;
+    filters = {gender:"All",category:"All",tshirt:"All",blood:"All"};
+    render();
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("mainContent").style.display = "none";
+    document.getElementById("errorContent").style.display = "";
+    document.getElementById("errTitle").textContent = "Failed to load data";
+    document.getElementById("errMsg").textContent = err.message || "Unknown error. Check console for details.";
+    setStatus("error", "Connection failed");
+    document.getElementById("refreshBtn").disabled = false;
+  }
+}
+
+// ── Helpers ─────────────────────────────────────────────────────
+function cnt(arr, k) { return arr.reduce((a,r)=>{a[r[k]]=(a[r[k]]||0)+1;return a;},{}); }
+
+function medBadge(m) {
+  const v = (m||"").toLowerCase().trim();
+  if (!v || v==="no" || v==="nil" || v==="none" || v==="—") return `<span class="badge bmed-no">None</span>`;
+  if (v==="normal" || v==="good") return `<span class="badge bmed-norm">${m}</span>`;
+  return `<span class="badge bmed-yes">${m}</span>`;
+}
+
+function filtered() {
+  const q = (document.getElementById("searchBox")||{value:""}).value.toLowerCase().trim();
+  return DATA.filter(r => {
+    if (filters.gender !== "All" && r.gender !== filters.gender) return false;
+    if (filters.category !== "All" && r.category !== filters.category) return false;
+    if (filters.tshirt !== "All" && r.tshirt !== filters.tshirt) return false;
+    if (filters.blood !== "All" && r.blood !== filters.blood) return false;
+    if (q && !JSON.stringify(r).toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a, b) => {
+    let va = a[sortKey], vb = b[sortKey];
+    if (sortKey === "age") { va = +va; vb = +vb; }
+    if (va < vb) return -sortDir; if (va > vb) return sortDir; return 0;
+  });
+}
+
+function setFilter(k, v) {
+  filters[k] = v;
+  document.querySelectorAll(`.frow[data-key="${k}"] .fbtn`).forEach(b => b.classList.toggle("on", b.dataset.val === v));
+  const anyOn = Object.values(filters).some(x => x !== "All");
+  const cb = document.getElementById("clrBtn");
+  if (cb) cb.style.display = anyOn ? "" : "none";
   render();
 }
 
-function clearFilters(){
-  Object.keys(filters).forEach(k=>filters[k]='All');
-  document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('on',b.dataset.val==='All'));
-  document.getElementById('clrBtn').style.display='none';
+function clearFilters() {
+  Object.keys(filters).forEach(k => filters[k] = "All");
+  document.querySelectorAll(".fbtn").forEach(b => b.classList.toggle("on", b.dataset.val === "All"));
+  const cb = document.getElementById("clrBtn");
+  if (cb) cb.style.display = "none";
   render();
 }
 
-function setSort(k){
-  if(sortKey===k) sortDir*=-1; else{sortKey=k;sortDir=1;}
+function setSort(k) {
+  if (sortKey === k) sortDir *= -1; else { sortKey = k; sortDir = 1; }
   render();
 }
 
-function openDetail(i){
-  const r=DATA[i];
-  document.getElementById("modalName").textContent=r.name;
-  document.getElementById("modalBody").innerHTML=`
+function openDetail(i) {
+  const r = DATA[i];
+  document.getElementById("modalName").textContent = r.name;
+  document.getElementById("modalBody").innerHTML = `
     <div class="detail-grid">
       <div class="detail-item"><div class="detail-key">Registered</div><div class="detail-val">${r.ts}</div></div>
       <div class="detail-item"><div class="detail-key">Age</div><div class="detail-val">${r.age} yrs</div></div>
@@ -256,121 +405,133 @@ function openDetail(i){
       <div class="detail-item full"><div class="detail-key">Address</div><div class="detail-val">${r.address}</div></div>
       <div class="detail-item"><div class="detail-key">Category</div><div class="detail-val"><span class="badge ${r.category==='Adult'?'ba':'bk'}">${r.category}</span></div></div>
       <div class="detail-item"><div class="detail-key">Distance</div><div class="detail-val">${r.distance}</div></div>
-      <div class="detail-item"><div class="detail-key">T-Shirt Size</div><div class="detail-val"><span class="badge bs">${r.tshirt}</span></div></div>
-      <div class="detail-item"><div class="detail-key">Medical Condition</div><div class="detail-val">${medBadge(r.medical)}</div></div>
-      <div class="detail-item full"><div class="detail-key">Payment Screenshot</div><div class="detail-val"><a class="bpay" href="${r.payment}" target="_blank">&#x1F4C4; View Payment</a></div></div>
+      <div class="detail-item"><div class="detail-key">T-Shirt</div><div class="detail-val"><span class="badge bs">${r.tshirt}</span></div></div>
+      <div class="detail-item"><div class="detail-key">Medical</div><div class="detail-val">${medBadge(r.medical)}</div></div>
+      <div class="detail-item full"><div class="detail-key">Payment Screenshot</div><div class="detail-val">
+        ${r.payment && r.payment !== '—' ? `<a class="bpay" href="${r.payment}" target="_blank">📄 View Payment</a>` : '<span style="color:var(--muted);font-size:12px">Not submitted</span>'}
+      </div></div>
     </div>`;
   document.getElementById("modalOverlay").classList.add("open");
-  document.body.style.overflow="hidden";
+  document.body.style.overflow = "hidden";
 }
 
-function closeModal(e){
-  if(e && e.target!==document.getElementById("modalOverlay")) return;
+function closeModal(e) {
+  if (e && e.target !== document.getElementById("modalOverlay")) return;
   document.getElementById("modalOverlay").classList.remove("open");
-  document.body.style.overflow="";
+  document.body.style.overflow = "";
 }
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal({target:document.getElementById("modalOverlay")})});
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal({target:document.getElementById("modalOverlay")}); });
 
-function render(){
-  const d=filtered();
-  const total=d.length;
-  const allGC=cnt(DATA,'gender'),allCC=cnt(DATA,'category'),allTC=cnt(DATA,'tshirt'),allBC=cnt(DATA,'blood');
-  const gc=cnt(d,'gender'),cc=cnt(d,'category'),tc=cnt(d,'tshirt'),bc=cnt(d,'blood');
-  const maxG=Math.max(...Object.values(allGC),1);
-  const maxC=Math.max(...Object.values(allCC),1);
-  const maxT=Math.max(...Object.values(allTC),1);
-  const maxB=Math.max(...Object.values(allBC),1);
+// ── Render ──────────────────────────────────────────────────────
+function render() {
+  const d = filtered();
+  const total = d.length;
+  const gc = cnt(d,"gender"), cc = cnt(d,"category"), tc = cnt(d,"tshirt"), bc = cnt(d,"blood");
+  const allGC = cnt(DATA,"gender"), allCC = cnt(DATA,"category"), allTC = cnt(DATA,"tshirt"), allBC = cnt(DATA,"blood");
+  const maxG = Math.max(...Object.values(allGC),1);
+  const maxC = Math.max(...Object.values(allCC),1);
+  const maxT = Math.max(...Object.values(allTC),1);
+  const maxB = Math.max(...Object.values(allBC),1);
 
-  // metrics
-  const mDefs=[
-    {v:total,l:'Total',ac:'--orange',ad:'--orange-dim'},
-    {v:gc.Male||0,l:'Male',ac:'--blue',ad:'--blue-dim'},
-    {v:gc.Female||0,l:'Female',ac:'--pink',ad:'--pink-dim'},
-    {v:cc.Adult||0,l:'Adult · 4 km',ac:'--green',ad:'--green-dim'},
-    {v:cc.Kids||0,l:'Kids · 2 km',ac:'--amber',ad:'--amber-dim'},
+  // Metrics
+  const mDefs = [
+    {v:total,l:"Total",ac:"--orange",ad:"--orange-dim"},
+    {v:gc.Male||0,l:"Male",ac:"--blue",ad:"--blue-dim"},
+    {v:gc.Female||0,l:"Female",ac:"--pink",ad:"--pink-dim"},
+    {v:cc.Adult||0,l:"Adult · 4km",ac:"--green",ad:"--green-dim"},
+    {v:cc.Kids||0,l:"Kids · 2km",ac:"--amber",ad:"--amber-dim"},
   ];
-  document.getElementById('metrics').innerHTML=mDefs.map(m=>`
-    <div class="metric" style="--ac:var(${m.ac});--ac-dim:var(${m.ad})">
+  document.getElementById("metrics").innerHTML = mDefs.map(m =>
+    `<div class="metric" style="--ac:var(${m.ac});--ac-dim:var(${m.ad})">
       <span class="metric-val">${m.v}</span>
       <div class="metric-lbl">${m.l}</div>
-    </div>`).join('');
+    </div>`).join("");
 
-  // charts
-  const brows=(items,counts,maxV,colorFn)=>items.map(l=>`
-    <div class="bar-row">
+  // Charts
+  const brows = (items, counts, maxV, colorFn) => items.map(l =>
+    `<div class="bar-row">
       <span class="bar-lbl" title="${l}">${l}</span>
       <div class="bar-track"><div class="bar-fill" style="width:${Math.round((counts[l]||0)/maxV*100)}%;background:${colorFn(l)}"></div></div>
       <span class="bar-n">${counts[l]||0}</span>
-    </div>`).join('');
+    </div>`).join("");
 
-  document.getElementById('charts').innerHTML=`
+  const activeSizes = SIZES.filter(s => allTC[s]);
+  const activeBloods = BLOOD.filter(b => allBC[b]);
+
+  document.getElementById("charts").innerHTML = `
     <div class="chart-card">
       <div class="chart-title">Gender</div>
-      ${brows(['Male','Female'],gc,maxG,l=>l==='Male'?'#4a9eff':'#ff4d8d')}
+      ${brows(["Male","Female"], gc, maxG, l => l==="Male"?"#4a9eff":"#ff4d8d")}
     </div>
     <div class="chart-card">
       <div class="chart-title">Category</div>
-      ${brows(['Adult','Kids'],cc,maxC,l=>l==='Adult'?'#3de68a':'#ffbe3d')}
+      ${brows(["Adult","Kids"], cc, maxC, l => l==="Adult"?"#3de68a":"#ffbe3d")}
     </div>
     <div class="chart-card">
-      <div class="chart-title">T-shirt size</div>
-      ${brows(SIZES.filter(s=>allTC[s]),tc,maxT,l=>SIZE_C[l]||'#888')}
+      <div class="chart-title">T-Shirt Size</div>
+      ${brows(activeSizes, tc, maxT, l => SIZE_C[l]||"#888")}
     </div>
     <div class="chart-card">
-      <div class="chart-title">Blood group</div>
-      ${brows(BLOOD.filter(b=>allBC[b]),bc,maxB,l=>BLOOD_C[l]||'#888')}
+      <div class="chart-title">Blood Group</div>
+      ${brows(activeBloods, bc, maxB, l => BLOOD_C[l]||"#888")}
     </div>`;
 
-  // filters
-  const mkRow=(key,label,opts)=>`
-    <div class="frow" data-key="${key}">
+  // Filters
+  const mkRow = (key, label, opts) =>
+    `<div class="frow" data-key="${key}">
       <span class="flabel">${label}</span>
-      ${['All',...opts].map(o=>`<button class="fbtn${filters[key]===o?' on':''}" data-val="${o}" onclick="setFilter('${key}','${o}')">${o}</button>`).join('')}
+      ${["All",...opts].map(o => `<button class="fbtn${filters[key]===o?" on":""}" data-val="${o}" onclick="setFilter('${key}','${o}')">${o}</button>`).join("")}
     </div>`;
-  document.getElementById('filters').innerHTML=
-    mkRow('gender','Gender',['Male','Female'])+
-    mkRow('category','Category',['Adult','Kids'])+
-    mkRow('tshirt','T-Shirt',SIZES)+
-    mkRow('blood','Blood',BLOOD)+
-    `<div style="text-align:right;margin-top:6px"><button class="clrbtn" id="clrBtn" style="display:${Object.values(filters).some(x=>x!=='All')?'':'none'}" onclick="clearFilters()">✕ Clear all filters</button></div>`;
 
-  // thead
-  const cols=[
-    {k:'ts',l:'Timestamp'},{k:'name',l:'Name'},{k:'age',l:'Age'},{k:'gender',l:'Gender'},
-    {k:'blood',l:'Blood'},{k:'whatsapp',l:'WhatsApp'},{k:'emergency',l:'Emergency'},
-    {k:'email',l:'Email'},{k:'address',l:'Address'},{k:'category',l:'Category'},
-    {k:'distance',l:'Distance'},{k:'tshirt',l:'T-Shirt'},{k:'medical',l:'Medical'},
-    {k:'payment',l:'Payment'},{k:'_detail',l:'Detail'},
+  const anyOn = Object.values(filters).some(x => x !== "All");
+  document.getElementById("filters").innerHTML =
+    mkRow("gender","Gender",["Male","Female"]) +
+    mkRow("category","Category",["Adult","Kids"]) +
+    mkRow("tshirt","T-Shirt", activeSizes) +
+    mkRow("blood","Blood", activeBloods) +
+    `<div style="text-align:right;margin-top:6px"><button class="clrbtn" id="clrBtn" style="display:${anyOn?'':'none'}" onclick="clearFilters()">✕ Clear filters</button></div>`;
+
+  // Table head
+  const cols = [
+    {k:"ts",l:"Timestamp"},{k:"name",l:"Name"},{k:"age",l:"Age"},{k:"gender",l:"Gender"},
+    {k:"blood",l:"Blood"},{k:"whatsapp",l:"WhatsApp"},{k:"emergency",l:"Emergency"},
+    {k:"email",l:"Email"},{k:"address",l:"Address"},{k:"category",l:"Category"},
+    {k:"distance",l:"Distance"},{k:"tshirt",l:"T-Shirt"},{k:"medical",l:"Medical"},
+    {k:"payment",l:"Payment"},{k:"_det",l:""}
   ];
-  document.getElementById('thead').innerHTML=cols.map(c=>
-    c.k==='_detail'?`<th></th>`:`<th class="${sortKey===c.k?'sorted':''}" onclick="setSort('${c.k}')">${c.l}<span class="sort-icon">${sortKey===c.k?(sortDir===1?'▲':'▼'):'⇅'}</span></th>`
-  ).join('');
+  document.getElementById("thead").innerHTML = cols.map(c =>
+    c.k === "_det" ? `<th></th>` :
+    `<th class="${sortKey===c.k?"sorted":""}" onclick="setSort('${c.k}')">${c.l} ${sortKey===c.k?(sortDir===1?"▲":"▼"):"⇅"}</th>`
+  ).join("");
 
-  // tbody
-  document.getElementById('tblCount').textContent=`${total} of ${DATA.length} participants`;
-  document.getElementById('tbody').innerHTML=d.length?d.map(r=>{
-    const i=DATA.indexOf(r);
-    return `<tr>
-      <td style="color:var(--muted);font-size:11px">${r.ts}</td>
-      <td style="font-weight:500">${r.name}</td>
-      <td>${r.age}</td>
-      <td><span class="badge ${r.gender==='Male'?'bm':'bf'}">${r.gender}</span></td>
-      <td><span class="badge b-bg">${r.blood}</span></td>
-      <td style="font-family:monospace;font-size:12px">${r.whatsapp}</td>
-      <td style="font-family:monospace;font-size:12px">${r.emergency}</td>
-      <td class="wrap-cell" style="font-size:11px;color:var(--muted)">${r.email}</td>
-      <td class="wrap-cell" style="font-size:11px;color:var(--muted)">${r.address}</td>
-      <td><span class="badge ${r.category==='Adult'?'ba':'bk'}">${r.category}</span></td>
-      <td style="color:var(--muted)">${r.distance}</td>
-      <td><span class="badge bs">${r.tshirt}</span></td>
-      <td>${medBadge(r.medical)}</td>
-      <td><a class="bpay" href="${r.payment}" target="_blank">&#x1F4C4; View</a></td>
-      <td><button onclick="openDetail(${i})" style="background:transparent;border:0.5px solid var(--border);color:var(--muted);padding:3px 10px;border-radius:100px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Details</button></td>
-    </tr>`;
-  }).join(''):`<tr><td colspan="15" class="no-result">No participants match the selected filters</td></tr>`;
+  // Table body
+  document.getElementById("tblCount").textContent = `${total} of ${DATA.length} participants`;
+  document.getElementById("tbody").innerHTML = d.length
+    ? d.map(r => {
+        const i = DATA.indexOf(r);
+        return `<tr>
+          <td style="color:var(--muted);font-size:11px">${r.ts}</td>
+          <td style="font-weight:500">${r.name}</td>
+          <td>${r.age}</td>
+          <td><span class="badge ${r.gender==="Male"?"bm":"bf"}">${r.gender}</span></td>
+          <td><span class="badge b-bg">${r.blood}</span></td>
+          <td style="font-family:monospace;font-size:12px">${r.whatsapp}</td>
+          <td style="font-family:monospace;font-size:12px">${r.emergency}</td>
+          <td class="wrap-cell">${r.email}</td>
+          <td class="wrap-cell">${r.address}</td>
+          <td><span class="badge ${r.category==="Adult"?"ba":"bk"}">${r.category}</span></td>
+          <td style="color:var(--muted)">${r.distance}</td>
+          <td><span class="badge bs">${r.tshirt}</span></td>
+          <td>${medBadge(r.medical)}</td>
+          <td>${r.payment && r.payment!=="—" ? `<a class="bpay" href="${r.payment}" target="_blank">📄 View</a>` : '<span style="color:var(--hint)">—</span>'}</td>
+          <td><button onclick="openDetail(${i})" style="background:transparent;border:0.5px solid var(--border);color:var(--muted);padding:3px 10px;border-radius:100px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Details</button></td>
+        </tr>`;
+      }).join("")
+    : `<tr><td colspan="15" class="no-result">No participants match the selected filters</td></tr>`;
 }
 
-render();
+// ── Boot ────────────────────────────────────────────────────────
+loadData();
 </script>
 </body>
 </html>
