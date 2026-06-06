@@ -1,537 +1,624 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini Marathon Fest'26 — Live Report</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0d0f14;--surface:#161921;--card:#1c2030;--border:#ffffff12;
-  --text:#f0f2f7;--muted:#7a8099;--hint:#2e3347;
-  --orange:#ff6b35;--orange-dim:#ff6b3520;
-  --blue:#4a9eff;--blue-dim:#4a9eff18;
-  --pink:#ff4d8d;--pink-dim:#ff4d8d18;
-  --green:#3de68a;--green-dim:#3de68a18;
-  --amber:#ffbe3d;--amber-dim:#ffbe3d18;
-  --purple:#a78bfa;--purple-dim:#a78bfa18;
-  --red:#ff5c5c;--red-dim:#ff5c5c18;
-  --teal:#2dd4bf;--teal-dim:#2dd4bf18;
-  --r:10px;--rl:16px;
-}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;font-size:14px;line-height:1.5}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0}
-.wrap{max-width:1200px;margin:0 auto;padding:2rem 1.25rem;position:relative;z-index:1}
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-/* header */
-.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:6px}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:.04em;line-height:1}
-h1 span{color:var(--orange)}
-.subtitle{color:var(--muted);font-size:13px;margin-top:6px}
-.status-row{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
-.status-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:4px 12px;border-radius:100px;border:0.5px solid var(--border);color:var(--muted)}
-.status-pill.live{border-color:#3de68a40;color:var(--green)}
-.status-pill.loading{border-color:#ffbe3d40;color:var(--amber)}
-.status-pill.error{border-color:#ff5c5c40;color:var(--red)}
-.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
-.dot.pulse{animation:pulse 1.4s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.refresh-btn{border:0.5px solid var(--border);background:transparent;color:var(--muted);padding:4px 14px;border-radius:100px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .15s}
-.refresh-btn:hover{border-color:var(--orange);color:var(--orange)}
-.refresh-btn:disabled{opacity:.4;cursor:not-allowed}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* loader skeleton */
-.skeleton{background:linear-gradient(90deg,var(--card) 25%,var(--hint) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:var(--r)}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skel-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:2rem 0 1.5rem}
-.skel-block{height:72px}
-.skel-chart{height:140px;margin-bottom:10px}
-.skel-table{height:300px}
+  .wrap {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(160deg, #0a1628 0%, #0f2a1a 60%, #1a0f0a 100%);
+    min-height: 100vh;
+    padding: 0;
+    color: #f0ece4;
+    position: relative;
+    overflow: hidden;
+  }
 
-/* metrics */
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:2rem 0 1.5rem}
-.metric{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:.9rem 1rem;overflow:hidden;position:relative}
-.metric::after{content:'';position:absolute;inset:0;background:var(--ac-dim);pointer-events:none}
-.metric-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em;color:var(--ac);display:block;line-height:1}
-.metric-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 48px 24px 36px;
+    overflow: hidden;
+  }
 
-/* charts */
-.charts-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
-.chart-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);padding:1.1rem}
-.chart-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:.9rem}
-.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.bar-lbl{font-size:12px;color:var(--text);min-width:56px;white-space:nowrap}
-.bar-track{flex:1;background:#ffffff0d;border-radius:4px;height:9px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
-.bar-n{font-size:12px;color:var(--muted);min-width:18px;text-align:right}
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,140,50,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-/* filters */
-.filters{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:1.25rem}
-.frow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:7px}
-.frow:last-child{margin-bottom:0}
-.flabel{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;min-width:72px}
-.fbtn{border:0.5px solid var(--border);background:transparent;color:var(--muted);padding:3px 11px;border-radius:100px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .15s;line-height:1.6}
-.fbtn:hover{border-color:#ffffff28;color:var(--text)}
-.fbtn.on{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:600}
-.clrbtn{margin-left:auto;border:0.5px solid var(--border);background:transparent;color:var(--muted);padding:3px 11px;border-radius:100px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;transition:all .15s;line-height:1.6}
-.clrbtn:hover{color:var(--orange);border-color:var(--orange)}
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,140,50,0.15);
+    border: 1px solid rgba(255,140,50,0.4);
+    color: #FF8C32;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
 
-/* search */
-.search-wrap{margin-bottom:1.25rem;position:relative}
-.search-wrap input{width:100%;background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 14px 9px 36px;outline:none;transition:border-color .15s}
-.search-wrap input:focus{border-color:#ffffff30}
-.search-wrap input::placeholder{color:var(--muted)}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 88px);
+    letter-spacing: 4px;
+    line-height: 0.9;
+    background: linear-gradient(135deg, #fff 40%, #FF8C32 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
 
-/* table */
-.tbl-wrap{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:2rem}
-.tbl-header{padding:.7rem 1.25rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.tbl-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
-.tbl-count{font-size:11px;color:var(--muted)}
-.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
-th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:9px 12px;text-align:left;border-bottom:0.5px solid var(--border);cursor:pointer;user-select:none;background:var(--card)}
-th:hover{color:var(--text)}
-th.sorted{color:var(--orange)}
-td{padding:9px 12px;border-bottom:0.5px solid var(--border);vertical-align:middle;color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis}
-tbody tr:last-child td{border-bottom:none}
-tbody tr:hover td{background:#ffffff04}
-td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px;font-size:11px;color:var(--muted)}
-.no-result{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
+  .hero-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    letter-spacing: 8px;
+    color: #FF8C32;
+    opacity: 0.85;
+  }
 
-/* badges */
-.badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
-.bm{background:var(--blue-dim);color:var(--blue)}
-.bf{background:var(--pink-dim);color:var(--pink)}
-.ba{background:var(--green-dim);color:var(--green)}
-.bk{background:var(--amber-dim);color:var(--amber)}
-.bs{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.05em;background:#ffffff0d;color:var(--text);padding:1px 7px}
-.bmed-no{background:var(--green-dim);color:var(--green)}
-.bmed-yes{background:var(--red-dim);color:var(--red)}
-.bmed-norm{background:var(--teal-dim);color:var(--teal)}
-.bpay{display:inline-flex;align-items:center;gap:4px;background:var(--orange-dim);color:var(--orange);padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600;text-decoration:none}
-.bpay:hover{background:var(--orange);color:#fff}
-.b-bg{background:var(--purple-dim);color:var(--purple)}
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
 
-/* detail modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:#000000cc;z-index:100;align-items:center;justify-content:center;padding:1rem}
-.modal-overlay.open{display:flex}
-.modal{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
-.modal-head{padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.modal-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em}
-.modal-close{background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px}
-.modal-close:hover{color:var(--text);background:var(--hint)}
-.modal-body{padding:1.25rem 1.5rem}
-.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.detail-item{background:var(--card);border-radius:var(--r);padding:.75rem}
-.detail-item.full{grid-column:1/-1}
-.detail-key{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
-.detail-val{font-size:13px;color:var(--text);word-break:break-word}
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(240,236,228,0.7);
+  }
 
-/* error state */
-.error-box{background:var(--red-dim);border:0.5px solid #ff5c5c30;border-radius:var(--rl);padding:1.5rem;text-align:center;color:var(--red);margin:2rem 0}
-.error-box p{font-size:13px;margin-top:8px;color:var(--muted)}
+  .meta-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #FF8C32;
+    flex-shrink: 0;
+  }
 
-footer{text-align:center;font-size:11px;color:var(--muted);padding-bottom:2rem}
-footer span{color:var(--orange)}
+  .fee-bar {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 24px 24px 0;
+    flex-wrap: wrap;
+  }
 
-@media(max-width:640px){.detail-grid{grid-template-columns:1fr}.charts-row{grid-template-columns:1fr}}
+  .fee-chip {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 12px 24px;
+    text-align: center;
+    min-width: 140px;
+  }
+
+  .fee-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(240,236,228,0.5); margin-bottom: 4px; }
+  .fee-amount { font-size: 22px; font-weight: 600; color: #fff; }
+  .fee-amount span { color: #FF8C32; }
+
+  .deadline {
+    text-align: center;
+    margin: 14px 24px;
+    font-size: 12px;
+    color: rgba(255,140,50,0.8);
+    letter-spacing: 1px;
+  }
+
+  .form-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    margin: 0 16px 24px;
+    padding: 28px 24px;
+    backdrop-filter: blur(10px);
+  }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #FF8C32;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,140,50,0.2);
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .field-full { grid-column: 1 / -1; }
+
+  .field-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: rgba(240,236,228,0.5);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .field-label .req { color: #FF8C32; margin-left: 2px; }
+
+  .field-input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: #f0ece4;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .field-input:focus {
+    border-color: rgba(255,140,50,0.5);
+    background: rgba(255,140,50,0.05);
+  }
+
+  .field-input::placeholder { color: rgba(240,236,228,0.25); }
+
+  select.field-input option { background: #1a2030; color: #f0ece4; }
+
+  .radio-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .radio-opt {
+    flex: 1;
+    min-width: 80px;
+    position: relative;
+  }
+
+  .radio-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    color: rgba(240,236,228,0.7);
+  }
+
+  .radio-opt input:checked + .radio-label {
+    background: rgba(255,140,50,0.15);
+    border-color: rgba(255,140,50,0.6);
+    color: #FF8C32;
+    font-weight: 500;
+  }
+
+  .radio-label:hover { border-color: rgba(255,140,50,0.3); }
+
+  .upload-zone {
+    border: 2px dashed rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-zone:hover { border-color: rgba(255,140,50,0.4); background: rgba(255,140,50,0.03); }
+  .upload-zone.has-file { border-color: rgba(255,140,50,0.6); background: rgba(255,140,50,0.07); }
+
+  .upload-icon {
+    width: 40px; height: 40px;
+    margin: 0 auto 10px;
+    background: rgba(255,140,50,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .upload-icon svg { width: 18px; height: 18px; fill: none; stroke: #FF8C32; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .upload-text { font-size: 13px; color: rgba(240,236,228,0.6); }
+  .upload-text strong { color: #FF8C32; }
+  .upload-name { font-size: 12px; color: #FF8C32; margin-top: 6px; font-weight: 500; }
+
+  #file-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+  .decl-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .decl-box:hover { border-color: rgba(255,140,50,0.3); background: rgba(255,140,50,0.03); }
+
+  .check-box {
+    width: 24px; height: 24px;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    background: rgba(255,255,255,0.05);
+    margin-top: 1px;
+  }
+
+  .check-box.checked {
+    background: #FF8C32;
+    border-color: #FF8C32;
+  }
+
+  .check-box svg { width: 13px; height: 13px; fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity 0.15s; }
+  .check-box.checked svg { opacity: 1; }
+
+  .decl-text { font-size: 13px; color: rgba(240,236,228,0.65); line-height: 1.6; }
+
+  .submit-btn {
+    width: calc(100% - 32px);
+    margin: 0 16px 32px;
+    padding: 18px;
+    background: linear-gradient(135deg, #FF8C32, #e05c0a);
+    border: none;
+    border-radius: 14px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,140,50,0.35); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .status-msg {
+    margin: 0 16px 16px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    display: none;
+  }
+
+  .status-msg.success { background: rgba(30,180,100,0.15); border: 1px solid rgba(30,180,100,0.3); color: #4ade80; display: block; }
+  .status-msg.error { background: rgba(255,60,60,0.1); border: 1px solid rgba(255,60,60,0.3); color: #f87171; display: block; }
+  .status-msg.loading { background: rgba(255,140,50,0.1); border: 1px solid rgba(255,140,50,0.3); color: #FF8C32; display: block; }
+
+  .success-card { display: none; text-align: center; padding: 48px 24px; }
+  .success-card.show { display: block; }
+
+  .success-icon {
+    width: 72px; height: 72px;
+    background: rgba(30,180,100,0.15);
+    border: 2px solid rgba(30,180,100,0.4);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .success-icon svg { width: 32px; height: 32px; fill: none; stroke: #4ade80; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  @media (max-width: 480px) {
+    .field-grid { grid-template-columns: 1fr; }
+    .field-full { grid-column: 1; }
+    .hero-meta { gap: 16px; }
+  }
 </style>
-</head>
-<body>
-<div class="wrap">
 
-  <header style="margin-bottom:1.5rem">
-    <div class="eyebrow">Perambalur · June 28, 2026</div>
-    <h1>Mini Marathon <span>Fest'26</span></h1>
-    <div class="subtitle">Registration Report — Live from Google Sheets</div>
-    <div class="status-row">
-      <div class="status-pill loading" id="statusPill"><span class="dot pulse"></span><span id="statusText">Connecting to Google Drive…</span></div>
-      <button class="refresh-btn" id="refreshBtn" onclick="loadData()" disabled>↺ Refresh</button>
-      <span style="font-size:11px;color:var(--muted)" id="lastFetch"></span>
-    </div>
-  </header>
+<div class="wrap" id="main-wrap">
 
-  <div id="mainContent">
-    <!-- skeleton loader -->
-    <div class="skel-metrics" id="skelMetrics">
-      ${Array(5).fill('<div class="skeleton skel-block"></div>').join('')}
+  <div class="hero">
+    <div class="hero-badge">Perambalur · June 28, 2026</div>
+    <div class="hero-title">Mini Marathon</div>
+    <div class="hero-year">FEST'26</div>
+    <div class="hero-meta">
+      <div class="meta-item"><div class="meta-dot"></div>Kids & Adults Welcome</div>
+      <div class="meta-item"><div class="meta-dot"></div>2km & 4km distances</div>
+      <div class="meta-item"><div class="meta-dot"></div>T-shirt included</div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem">
-      ${Array(4).fill('<div class="skeleton skel-chart"></div>').join('')}
-    </div>
-    <div class="skeleton skel-table"></div>
   </div>
 
-  <div id="reportContent" style="display:none">
-    <div class="metrics" id="metrics"></div>
-    <div class="charts-row" id="charts"></div>
-    <div class="filters" id="filters"></div>
-    <div class="search-wrap">
-      <span class="search-icon">⌕</span>
-      <input type="text" id="searchBox" placeholder="Search name, email, address, blood group…" oninput="render()">
+  <div class="fee-bar">
+    <div class="fee-chip">
+      <div class="fee-label">Kids (below 18)</div>
+      <div class="fee-amount"><span>₹</span>149</div>
     </div>
-    <div class="tbl-wrap">
-      <div class="tbl-header">
-        <span class="tbl-title">All Participants</span>
-        <span class="tbl-count" id="tblCount"></span>
+    <div class="fee-chip">
+      <div class="fee-label">Adults</div>
+      <div class="fee-amount"><span>₹</span>199</div>
+    </div>
+  </div>
+  <div class="deadline">⏰ Registration closes: June 20, 2026</div>
+
+  <div id="form-section">
+    <!-- Personal Info -->
+    <div class="form-card">
+      <div class="section-title">Personal Information</div>
+      <div class="field-grid">
+        <div class="field-full">
+          <label class="field-label">Full Name <span class="req">*</span></label>
+          <input type="text" class="field-input" id="f-name" placeholder="Enter your full name" />
+        </div>
+        <div>
+          <label class="field-label">Age <span class="req">*</span></label>
+          <input type="number" class="field-input" id="f-age" placeholder="Your age" min="1" max="100" />
+        </div>
+        <div>
+          <label class="field-label">Blood Group <span class="req">*</span></label>
+          <select class="field-input" id="f-blood">
+            <option value="">Select</option>
+            <option>A+</option><option>A-</option>
+            <option>B+</option><option>B-</option>
+            <option>AB+</option><option>AB-</option>
+            <option>O+</option><option>O-</option>
+          </select>
+        </div>
+        <div class="field-full">
+          <label class="field-label">Gender <span class="req">*</span></label>
+          <div class="radio-group">
+            <div class="radio-opt"><input type="radio" name="gender" id="g-m" value="Male"><label class="radio-label" for="g-m">Male</label></div>
+            <div class="radio-opt"><input type="radio" name="gender" id="g-f" value="Female"><label class="radio-label" for="g-f">Female</label></div>
+            <div class="radio-opt"><input type="radio" name="gender" id="g-o" value="Other"><label class="radio-label" for="g-o">Other</label></div>
+          </div>
+        </div>
       </div>
-      <div class="tbl-scroll">
-        <table>
-          <thead><tr id="thead"></tr></thead>
-          <tbody id="tbody"></tbody>
-        </table>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="form-card">
+      <div class="section-title">Contact Details</div>
+      <div class="field-grid">
+        <div>
+          <label class="field-label">WhatsApp Number <span class="req">*</span></label>
+          <input type="tel" class="field-input" id="f-phone" placeholder="+91 XXXXX XXXXX" />
+        </div>
+        <div>
+          <label class="field-label">Emergency Contact <span class="req">*</span></label>
+          <input type="tel" class="field-input" id="f-emergency" placeholder="+91 XXXXX XXXXX" />
+        </div>
+        <div class="field-full">
+          <label class="field-label">Email Address <span class="req">*</span></label>
+          <input type="email" class="field-input" id="f-email" placeholder="your@email.com" />
+        </div>
+        <div class="field-full">
+          <label class="field-label">Address <span class="req">*</span></label>
+          <textarea class="field-input" id="f-address" rows="2" placeholder="Your full address" style="resize: vertical;"></textarea>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="errorContent" style="display:none">
-    <div class="error-box">
-      <div style="font-size:1.5rem">⚠️</div>
-      <div style="font-weight:600;margin-top:8px" id="errTitle">Could not load data</div>
-      <p id="errMsg">Please check your connection and try again.</p>
-      <button class="refresh-btn" onclick="loadData()" style="margin-top:1rem;color:var(--red);border-color:var(--red)">↺ Retry</button>
+    <!-- Race Details -->
+    <div class="form-card">
+      <div class="section-title">Race Details</div>
+      <div class="field-grid">
+        <div class="field-full">
+          <label class="field-label">Category <span class="req">*</span></label>
+          <div class="radio-group">
+            <div class="radio-opt"><input type="radio" name="category" id="c-kid" value="Kids"><label class="radio-label" for="c-kid">Kids</label></div>
+            <div class="radio-opt"><input type="radio" name="category" id="c-adu" value="Adult"><label class="radio-label" for="c-adu">Adult</label></div>
+          </div>
+        </div>
+        <div class="field-full">
+          <label class="field-label">Distance <span class="req">*</span></label>
+          <div class="radio-group">
+            <div class="radio-opt"><input type="radio" name="distance" id="d-2" value="2km"><label class="radio-label" for="d-2">2 km</label></div>
+            <div class="radio-opt"><input type="radio" name="distance" id="d-4" value="4km"><label class="radio-label" for="d-4">4 km</label></div>
+          </div>
+        </div>
+        <div class="field-full">
+          <label class="field-label">T-Shirt Size <span class="req">*</span></label>
+          <div class="radio-group">
+            <div class="radio-opt"><input type="radio" name="tshirt" id="t-xs" value="XS"><label class="radio-label" for="t-xs">XS</label></div>
+            <div class="radio-opt"><input type="radio" name="tshirt" id="t-s" value="S"><label class="radio-label" for="t-s">S</label></div>
+            <div class="radio-opt"><input type="radio" name="tshirt" id="t-m" value="M"><label class="radio-label" for="t-m">M</label></div>
+            <div class="radio-opt"><input type="radio" name="tshirt" id="t-l" value="L"><label class="radio-label" for="t-l">L</label></div>
+            <div class="radio-opt"><input type="radio" name="tshirt" id="t-xl" value="XL"><label class="radio-label" for="t-xl">XL</label></div>
+            <div class="radio-opt"><input type="radio" name="tshirt" id="t-xxl" value="XXL"><label class="radio-label" for="t-xxl">XXL</label></div>
+          </div>
+        </div>
+        <div class="field-full">
+          <label class="field-label">Medical Condition (if any)</label>
+          <input type="text" class="field-input" id="f-medical" placeholder="None / describe condition" />
+        </div>
+      </div>
     </div>
-  </div>
 
-  <footer>Mini Marathon Fest'26 &nbsp;·&nbsp; Perambalur &nbsp;·&nbsp; <span>786 Spices Group</span></footer>
-</div>
-
-<!-- Detail Modal -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal">
-    <div class="modal-head">
-      <span class="modal-name" id="modalName"></span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+    <!-- Payment -->
+    <div class="form-card">
+      <div class="section-title">Payment Screenshot</div>
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="file-input" accept="image/*,.pdf" />
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        </div>
+        <div class="upload-text"><strong>Tap to upload</strong> payment screenshot</div>
+        <div class="upload-text" style="font-size:11px; margin-top:4px;">PNG, JPG or PDF accepted</div>
+        <div class="upload-name" id="file-name"></div>
+      </div>
     </div>
-    <div class="modal-body" id="modalBody"></div>
+
+    <!-- Declaration -->
+    <div class="form-card">
+      <div class="section-title">Declaration</div>
+      <div class="decl-box" id="decl-box" onclick="toggleDecl()">
+        <div class="check-box" id="check-box">
+          <svg viewBox="0 0 13 13"><polyline points="2,6.5 5.5,10 11,3"/></svg>
+        </div>
+        <div class="decl-text">
+          I confirm that I am physically fit to participate in this marathon and accept full responsibility for my health and safety during the event.
+        </div>
+      </div>
+    </div>
+
+    <div class="status-msg" id="status-msg"></div>
+    <button class="submit-btn" id="submit-btn" onclick="submitForm()">Register Now</button>
   </div>
+
+  <!-- Success -->
+  <div class="success-card" id="success-card">
+    <div class="success-icon">
+      <svg viewBox="0 0 32 32"><polyline points="5,16 12,23 27,9"/></svg>
+    </div>
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:3px; color:#fff; margin-bottom:10px;">Registration Complete!</div>
+    <div style="font-size:14px; color:rgba(240,236,228,0.6); line-height:1.7; max-width:320px; margin:0 auto 24px;">
+      Thank you for registering for Mini Marathon Fest'26.<br>Our team will contact you soon on WhatsApp.
+    </div>
+    <div style="font-size:13px; color:#4ade80; background:rgba(30,180,100,0.1); border:1px solid rgba(30,180,100,0.25); padding:12px 20px; border-radius:10px; display:inline-block; margin-bottom: 20px;">
+      Your data has been saved to Google Drive
+    </div>
+    <br>
+    <button onclick="resetForm()" style="background:transparent; border:1px solid rgba(255,255,255,0.2); color:rgba(240,236,228,0.7); padding:12px 28px; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; margin-top:8px;">Register Another</button>
+  </div>
+
 </div>
 
 <script>
-const FILE_ID = "1y-IlI0GbCQQAkNMnhfSPBqo-u7uwbgHkW8LDNe0iwWM";
-const DRIVE_MCP = "https://drivemcp.googleapis.com/mcp/v1";
+  var selectedFile = null;
+  var fileBase64 = null;
+  var declared = false;
 
-let DATA = [];
-let filters = {gender:"All",category:"All",tshirt:"All",blood:"All"};
-let sortKey = "ts", sortDir = 1;
-
-const SIZES = ["S","M","L","XL","XXL"];
-const BLOOD = ["A+","A-","B+","B-","AB+","AB-","O+","O-"];
-const SIZE_C = {S:"#a78bfa",M:"#3de68a",L:"#ffbe3d",XL:"#ff6b35",XXL:"#ff4d8d"};
-const BLOOD_C = {"A+":"#ff4d8d","A-":"#ff4d8d","B+":"#4a9eff","B-":"#4a9eff","AB+":"#a78bfa","AB-":"#a78bfa","O+":"#3de68a","O-":"#3de68a"};
-
-// ── Status helpers ──────────────────────────────────────────────
-function setStatus(state, text) {
-  const pill = document.getElementById("statusPill");
-  const dot = pill.querySelector(".dot");
-  pill.className = "status-pill " + state;
-  dot.className = "dot" + (state === "loading" ? " pulse" : "");
-  document.getElementById("statusText").textContent = text;
-}
-
-// ── Parse markdown table from Drive MCP ────────────────────────
-function parseMdTable(md) {
-  const lines = md.split("\n").map(l => l.trim()).filter(l => l.startsWith("|"));
-  if (lines.length < 3) return [];
-  const headers = lines[0].split("|").map(h => h.trim()).filter(Boolean);
-  const rows = lines.slice(2); // skip separator
-  return rows.map(row => {
-    const cells = row.split("|").map(c => c.trim()).filter(Boolean);
-    const obj = {};
-    headers.forEach((h, i) => obj[h] = cells[i] || "");
-    return obj;
-  });
-}
-
-// ── Normalise a raw row into our clean record ──────────────────
-function normalise(raw) {
-  const get = (...keys) => {
-    for (const k of keys) {
-      const found = Object.keys(raw).find(rk => rk.toLowerCase().includes(k.toLowerCase()));
-      if (found && raw[found]) return raw[found].trim();
-    }
-    return "—";
-  };
-  return {
-    ts:        get("Timestamp"),
-    name:      get("Full Name", "Name"),
-    age:       get("Age"),
-    gender:    get("Gender"),
-    whatsapp:  get("Whatsapp", "WhatsApp"),
-    emergency: get("Emergency"),
-    blood:     get("Blood"),
-    email:     get("Email"),
-    address:   get("Address"),
-    category:  get("Category"),
-    distance:  get("Distance"),
-    tshirt:    get("T-shirt", "T-Shirt", "Shirt"),
-    medical:   get("Medical"),
-    payment:   get("Payment", "Screenshot"),
-  };
-}
-
-// ── Main fetch via Anthropic API + Drive MCP ───────────────────
-async function loadData() {
-  document.getElementById("refreshBtn").disabled = true;
-  document.getElementById("mainContent").style.display = "";
-  document.getElementById("reportContent").style.display = "none";
-  document.getElementById("errorContent").style.display = "none";
-  document.getElementById("mainContent").innerHTML = `
-    <div class="skel-metrics">${Array(5).fill('<div class="skeleton skel-block"></div>').join('')}</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem">${Array(4).fill('<div class="skeleton skel-chart"></div>').join('')}</div>
-    <div class="skeleton skel-table"></div>`;
-  setStatus("loading", "Connecting to Google Drive…");
-
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 8000,
-        system: `You are a data extraction assistant. 
-Use the Google Drive MCP to read the spreadsheet file with ID: ${FILE_ID}.
-Call the read_file_content tool with fileId="${FILE_ID}".
-Then return ONLY a valid JSON array of objects — one object per participant row (skip the header and separator rows).
-Each object must have these exact keys:
-ts, name, age, gender, whatsapp, emergency, blood, email, address, category, distance, tshirt, medical, payment
-Map columns from the sheet to these keys.
-Return ONLY the JSON array. No explanation, no markdown fences, no other text.`,
-        messages: [{ role: "user", content: "Fetch all participant rows from the Google Sheet and return as JSON array." }],
-        mcp_servers: [{ type: "url", url: DRIVE_MCP, name: "google-drive" }]
-      })
-    });
-
-    if (!res.ok) throw new Error(`API error ${res.status}`);
-    const data = await res.json();
-
-    // Extract text from response
-    const textBlocks = data.content.filter(b => b.type === "text").map(b => b.text);
-    const fullText = textBlocks.join("\n");
-
-    // Find JSON array in response
-    const jsonMatch = fullText.match(/\[[\s\S]*\]/);
-    if (!jsonMatch) throw new Error("No JSON array found in response");
-
-    const parsed = JSON.parse(jsonMatch[0]);
-    if (!Array.isArray(parsed) || parsed.length === 0) throw new Error("Empty or invalid data returned");
-
-    DATA = parsed.map(r => {
-      // If keys already match our schema, use directly; else normalise
-      return r.name !== undefined ? r : normalise(r);
-    });
-
-    document.getElementById("mainContent").style.display = "none";
-    document.getElementById("reportContent").style.display = "";
-    setStatus("live", `Live · ${DATA.length} registrations`);
-    document.getElementById("lastFetch").textContent = "Updated " + new Date().toLocaleTimeString('en-SG', {hour:'2-digit',minute:'2-digit'});
-    document.getElementById("refreshBtn").disabled = false;
-    filters = {gender:"All",category:"All",tshirt:"All",blood:"All"};
-    render();
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("mainContent").style.display = "none";
-    document.getElementById("errorContent").style.display = "";
-    document.getElementById("errTitle").textContent = "Failed to load data";
-    document.getElementById("errMsg").textContent = err.message || "Unknown error. Check console for details.";
-    setStatus("error", "Connection failed");
-    document.getElementById("refreshBtn").disabled = false;
+  function toggleDecl() {
+    declared = !declared;
+    var box = document.getElementById('check-box');
+    if (declared) { box.classList.add('checked'); } else { box.classList.remove('checked'); }
   }
-}
 
-// ── Helpers ─────────────────────────────────────────────────────
-function cnt(arr, k) { return arr.reduce((a,r)=>{a[r[k]]=(a[r[k]]||0)+1;return a;},{}); }
-
-function medBadge(m) {
-  const v = (m||"").toLowerCase().trim();
-  if (!v || v==="no" || v==="nil" || v==="none" || v==="—") return `<span class="badge bmed-no">None</span>`;
-  if (v==="normal" || v==="good") return `<span class="badge bmed-norm">${m}</span>`;
-  return `<span class="badge bmed-yes">${m}</span>`;
-}
-
-function filtered() {
-  const q = (document.getElementById("searchBox")||{value:""}).value.toLowerCase().trim();
-  return DATA.filter(r => {
-    if (filters.gender !== "All" && r.gender !== filters.gender) return false;
-    if (filters.category !== "All" && r.category !== filters.category) return false;
-    if (filters.tshirt !== "All" && r.tshirt !== filters.tshirt) return false;
-    if (filters.blood !== "All" && r.blood !== filters.blood) return false;
-    if (q && !JSON.stringify(r).toLowerCase().includes(q)) return false;
-    return true;
-  }).sort((a, b) => {
-    let va = a[sortKey], vb = b[sortKey];
-    if (sortKey === "age") { va = +va; vb = +vb; }
-    if (va < vb) return -sortDir; if (va > vb) return sortDir; return 0;
+  document.getElementById('file-input').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    selectedFile = file;
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('upload-zone').classList.add('has-file');
+    var reader = new FileReader();
+    reader.onload = function(ev) { fileBase64 = ev.target.result.split(',')[1]; };
+    reader.readAsDataURL(file);
   });
-}
 
-function setFilter(k, v) {
-  filters[k] = v;
-  document.querySelectorAll(`.frow[data-key="${k}"] .fbtn`).forEach(b => b.classList.toggle("on", b.dataset.val === v));
-  const anyOn = Object.values(filters).some(x => x !== "All");
-  const cb = document.getElementById("clrBtn");
-  if (cb) cb.style.display = anyOn ? "" : "none";
-  render();
-}
+  function getRadio(name) {
+    var el = document.querySelector('input[name="'+name+'"]:checked');
+    return el ? el.value : '';
+  }
 
-function clearFilters() {
-  Object.keys(filters).forEach(k => filters[k] = "All");
-  document.querySelectorAll(".fbtn").forEach(b => b.classList.toggle("on", b.dataset.val === "All"));
-  const cb = document.getElementById("clrBtn");
-  if (cb) cb.style.display = "none";
-  render();
-}
+  function setStatus(msg, type) {
+    var el = document.getElementById('status-msg');
+    el.textContent = msg;
+    el.className = 'status-msg ' + (type || '');
+  }
 
-function setSort(k) {
-  if (sortKey === k) sortDir *= -1; else { sortKey = k; sortDir = 1; }
-  render();
-}
+  function resetForm() {
+    document.getElementById('success-card').classList.remove('show');
+    document.getElementById('form-section').style.display = 'block';
+    document.querySelectorAll('.field-input').forEach(function(el) { el.value = ''; });
+    document.querySelectorAll('input[type=radio]').forEach(function(el) { el.checked = false; });
+    declared = false;
+    document.getElementById('check-box').classList.remove('checked');
+    document.getElementById('file-name').textContent = '';
+    document.getElementById('upload-zone').classList.remove('has-file');
+    selectedFile = null; fileBase64 = null;
+    setStatus('', '');
+  }
 
-function openDetail(i) {
-  const r = DATA[i];
-  document.getElementById("modalName").textContent = r.name;
-  document.getElementById("modalBody").innerHTML = `
-    <div class="detail-grid">
-      <div class="detail-item"><div class="detail-key">Registered</div><div class="detail-val">${r.ts}</div></div>
-      <div class="detail-item"><div class="detail-key">Age</div><div class="detail-val">${r.age} yrs</div></div>
-      <div class="detail-item"><div class="detail-key">Gender</div><div class="detail-val"><span class="badge ${r.gender==='Male'?'bm':'bf'}">${r.gender}</span></div></div>
-      <div class="detail-item"><div class="detail-key">Blood Group</div><div class="detail-val"><span class="badge b-bg">${r.blood}</span></div></div>
-      <div class="detail-item"><div class="detail-key">WhatsApp</div><div class="detail-val">+91 ${r.whatsapp}</div></div>
-      <div class="detail-item"><div class="detail-key">Emergency Contact</div><div class="detail-val">+91 ${r.emergency}</div></div>
-      <div class="detail-item full"><div class="detail-key">Email</div><div class="detail-val">${r.email}</div></div>
-      <div class="detail-item full"><div class="detail-key">Address</div><div class="detail-val">${r.address}</div></div>
-      <div class="detail-item"><div class="detail-key">Category</div><div class="detail-val"><span class="badge ${r.category==='Adult'?'ba':'bk'}">${r.category}</span></div></div>
-      <div class="detail-item"><div class="detail-key">Distance</div><div class="detail-val">${r.distance}</div></div>
-      <div class="detail-item"><div class="detail-key">T-Shirt</div><div class="detail-val"><span class="badge bs">${r.tshirt}</span></div></div>
-      <div class="detail-item"><div class="detail-key">Medical</div><div class="detail-val">${medBadge(r.medical)}</div></div>
-      <div class="detail-item full"><div class="detail-key">Payment Screenshot</div><div class="detail-val">
-        ${r.payment && r.payment !== '—' ? `<a class="bpay" href="${r.payment}" target="_blank">📄 View Payment</a>` : '<span style="color:var(--muted);font-size:12px">Not submitted</span>'}
-      </div></div>
-    </div>`;
-  document.getElementById("modalOverlay").classList.add("open");
-  document.body.style.overflow = "hidden";
-}
+  async function submitForm() {
+    var name = document.getElementById('f-name').value.trim();
+    var age = document.getElementById('f-age').value.trim();
+    var blood = document.getElementById('f-blood').value;
+    var gender = getRadio('gender');
+    var phone = document.getElementById('f-phone').value.trim();
+    var emergency = document.getElementById('f-emergency').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var address = document.getElementById('f-address').value.trim();
+    var category = getRadio('category');
+    var distance = getRadio('distance');
+    var tshirt = getRadio('tshirt');
+    var medical = document.getElementById('f-medical').value.trim() || 'None';
 
-function closeModal(e) {
-  if (e && e.target !== document.getElementById("modalOverlay")) return;
-  document.getElementById("modalOverlay").classList.remove("open");
-  document.body.style.overflow = "";
-}
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal({target:document.getElementById("modalOverlay")}); });
+    if (!name || !age || !blood || !gender || !phone || !emergency || !email || !address || !category || !distance || !tshirt) {
+      setStatus('Please fill in all required fields.', 'error'); return;
+    }
+    if (!declared) { setStatus('Please confirm the declaration to proceed.', 'error'); return; }
+    if (!selectedFile) { setStatus('Please upload your payment screenshot.', 'error'); return; }
 
-// ── Render ──────────────────────────────────────────────────────
-function render() {
-  const d = filtered();
-  const total = d.length;
-  const gc = cnt(d,"gender"), cc = cnt(d,"category"), tc = cnt(d,"tshirt"), bc = cnt(d,"blood");
-  const allGC = cnt(DATA,"gender"), allCC = cnt(DATA,"category"), allTC = cnt(DATA,"tshirt"), allBC = cnt(DATA,"blood");
-  const maxG = Math.max(...Object.values(allGC),1);
-  const maxC = Math.max(...Object.values(allCC),1);
-  const maxT = Math.max(...Object.values(allTC),1);
-  const maxB = Math.max(...Object.values(allBC),1);
+    var btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    setStatus('Saving your registration to Google Drive...', 'loading');
 
-  // Metrics
-  const mDefs = [
-    {v:total,l:"Total",ac:"--orange",ad:"--orange-dim"},
-    {v:gc.Male||0,l:"Male",ac:"--blue",ad:"--blue-dim"},
-    {v:gc.Female||0,l:"Female",ac:"--pink",ad:"--pink-dim"},
-    {v:cc.Adult||0,l:"Adult · 4km",ac:"--green",ad:"--green-dim"},
-    {v:cc.Kids||0,l:"Kids · 2km",ac:"--amber",ad:"--amber-dim"},
-  ];
-  document.getElementById("metrics").innerHTML = mDefs.map(m =>
-    `<div class="metric" style="--ac:var(${m.ac});--ac-dim:var(${m.ad})">
-      <span class="metric-val">${m.v}</span>
-      <div class="metric-lbl">${m.l}</div>
-    </div>`).join("");
+    var payload = {
+      name, age, blood, gender, phone, emergency, email, address,
+      category, distance, tshirt, medical,
+      timestamp: new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'}),
+      fileName: selectedFile ? selectedFile.name : '',
+      fileBase64: fileBase64 || ''
+    };
 
-  // Charts
-  const brows = (items, counts, maxV, colorFn) => items.map(l =>
-    `<div class="bar-row">
-      <span class="bar-lbl" title="${l}">${l}</span>
-      <div class="bar-track"><div class="bar-fill" style="width:${Math.round((counts[l]||0)/maxV*100)}%;background:${colorFn(l)}"></div></div>
-      <span class="bar-n">${counts[l]||0}</span>
-    </div>`).join("");
+    try {
+      var response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: 'You are a Google Drive file manager. When given registration data, use the Google Drive MCP to save it as a Google Doc or text file named "Marathon_Reg_<name>_<timestamp>". Respond with a JSON object: {"success": true, "message": "..."} or {"success": false, "message": "..."}. Return ONLY valid JSON.',
+          messages: [{ role: 'user', content: 'Save this Mini Marathon Fest\'26 registration to Google Drive as a new file.\n\nRegistration Data:\n' + JSON.stringify(payload, null, 2) }],
+          mcp_servers: [{ type: 'url', url: 'https://drivemcp.googleapis.com/mcp/v1', name: 'google-drive' }]
+        })
+      });
 
-  const activeSizes = SIZES.filter(s => allTC[s]);
-  const activeBloods = BLOOD.filter(b => allBC[b]);
+      var data = await response.json();
+      var textBlock = (data.content || []).find(function(b) { return b.type === 'text'; });
+      var text = textBlock ? textBlock.text : '';
+      var parsed;
+      try { parsed = JSON.parse(text.replace(/```json|```/g,'').trim()); } catch(e) { parsed = { success: true }; }
 
-  document.getElementById("charts").innerHTML = `
-    <div class="chart-card">
-      <div class="chart-title">Gender</div>
-      ${brows(["Male","Female"], gc, maxG, l => l==="Male"?"#4a9eff":"#ff4d8d")}
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Category</div>
-      ${brows(["Adult","Kids"], cc, maxC, l => l==="Adult"?"#3de68a":"#ffbe3d")}
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">T-Shirt Size</div>
-      ${brows(activeSizes, tc, maxT, l => SIZE_C[l]||"#888")}
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Blood Group</div>
-      ${brows(activeBloods, bc, maxB, l => BLOOD_C[l]||"#888")}
-    </div>`;
-
-  // Filters
-  const mkRow = (key, label, opts) =>
-    `<div class="frow" data-key="${key}">
-      <span class="flabel">${label}</span>
-      ${["All",...opts].map(o => `<button class="fbtn${filters[key]===o?" on":""}" data-val="${o}" onclick="setFilter('${key}','${o}')">${o}</button>`).join("")}
-    </div>`;
-
-  const anyOn = Object.values(filters).some(x => x !== "All");
-  document.getElementById("filters").innerHTML =
-    mkRow("gender","Gender",["Male","Female"]) +
-    mkRow("category","Category",["Adult","Kids"]) +
-    mkRow("tshirt","T-Shirt", activeSizes) +
-    mkRow("blood","Blood", activeBloods) +
-    `<div style="text-align:right;margin-top:6px"><button class="clrbtn" id="clrBtn" style="display:${anyOn?'':'none'}" onclick="clearFilters()">✕ Clear filters</button></div>`;
-
-  // Table head
-  const cols = [
-    {k:"ts",l:"Timestamp"},{k:"name",l:"Name"},{k:"age",l:"Age"},{k:"gender",l:"Gender"},
-    {k:"blood",l:"Blood"},{k:"whatsapp",l:"WhatsApp"},{k:"emergency",l:"Emergency"},
-    {k:"email",l:"Email"},{k:"address",l:"Address"},{k:"category",l:"Category"},
-    {k:"distance",l:"Distance"},{k:"tshirt",l:"T-Shirt"},{k:"medical",l:"Medical"},
-    {k:"payment",l:"Payment"},{k:"_det",l:""}
-  ];
-  document.getElementById("thead").innerHTML = cols.map(c =>
-    c.k === "_det" ? `<th></th>` :
-    `<th class="${sortKey===c.k?"sorted":""}" onclick="setSort('${c.k}')">${c.l} ${sortKey===c.k?(sortDir===1?"▲":"▼"):"⇅"}</th>`
-  ).join("");
-
-  // Table body
-  document.getElementById("tblCount").textContent = `${total} of ${DATA.length} participants`;
-  document.getElementById("tbody").innerHTML = d.length
-    ? d.map(r => {
-        const i = DATA.indexOf(r);
-        return `<tr>
-          <td style="color:var(--muted);font-size:11px">${r.ts}</td>
-          <td style="font-weight:500">${r.name}</td>
-          <td>${r.age}</td>
-          <td><span class="badge ${r.gender==="Male"?"bm":"bf"}">${r.gender}</span></td>
-          <td><span class="badge b-bg">${r.blood}</span></td>
-          <td style="font-family:monospace;font-size:12px">${r.whatsapp}</td>
-          <td style="font-family:monospace;font-size:12px">${r.emergency}</td>
-          <td class="wrap-cell">${r.email}</td>
-          <td class="wrap-cell">${r.address}</td>
-          <td><span class="badge ${r.category==="Adult"?"ba":"bk"}">${r.category}</span></td>
-          <td style="color:var(--muted)">${r.distance}</td>
-          <td><span class="badge bs">${r.tshirt}</span></td>
-          <td>${medBadge(r.medical)}</td>
-          <td>${r.payment && r.payment!=="—" ? `<a class="bpay" href="${r.payment}" target="_blank">📄 View</a>` : '<span style="color:var(--hint)">—</span>'}</td>
-          <td><button onclick="openDetail(${i})" style="background:transparent;border:0.5px solid var(--border);color:var(--muted);padding:3px 10px;border-radius:100px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Details</button></td>
-        </tr>`;
-      }).join("")
-    : `<tr><td colspan="15" class="no-result">No participants match the selected filters</td></tr>`;
-}
-
-// ── Boot ────────────────────────────────────────────────────────
-loadData();
+      if (parsed.success !== false) {
+        document.getElementById('form-section').style.display = 'none';
+        document.getElementById('success-card').classList.add('show');
+        setStatus('', '');
+      } else {
+        setStatus('Error: ' + (parsed.message || 'Could not save. Please try again.'), 'error');
+        btn.disabled = false;
+      }
+    } catch(err) {
+      setStatus('Network error. Please check your connection and try again.', 'error');
+      btn.disabled = false;
+    }
+  }
 </script>
-</body>
-</html>
