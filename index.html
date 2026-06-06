@@ -25,21 +25,18 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 .wrap{max-width:1200px;margin:0 auto;padding:2rem 1.25rem;position:relative;z-index:1}
 
-/* header */
 .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:6px}
 h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:.04em;line-height:1;color:var(--text)}
 h1 span{color:var(--orange)}
 .subtitle{color:var(--muted);font-size:13px;margin-top:6px}
 .gen-time{font-size:11px;color:var(--hint);margin-top:3px}
 
-/* metrics */
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:2rem 0 1.5rem}
 .metric{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:.9rem 1rem;overflow:hidden;position:relative}
 .metric::after{content:'';position:absolute;inset:0;background:var(--ac-dim);pointer-events:none}
 .metric-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em;color:var(--ac);display:block;line-height:1}
 .metric-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
 
-/* charts */
 .charts-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
 .chart-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);padding:1.1rem}
 .chart-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:.9rem}
@@ -49,7 +46,6 @@ h1 span{color:var(--orange)}
 .bar-fill{height:100%;border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
 .bar-n{font-size:12px;color:var(--muted);min-width:18px;text-align:right}
 
-/* filters */
 .filters{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:1.25rem}
 .frow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:7px}
 .frow:last-child{margin-bottom:0}
@@ -60,14 +56,12 @@ h1 span{color:var(--orange)}
 .clrbtn{margin-left:auto;border:0.5px solid var(--border);background:transparent;color:var(--muted);padding:3px 11px;border-radius:100px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;transition:all .15s;line-height:1.6}
 .clrbtn:hover{color:var(--orange);border-color:var(--orange)}
 
-/* search */
 .search-wrap{margin-bottom:1.25rem;position:relative}
 .search-wrap input{width:100%;background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 14px 9px 36px;outline:none;transition:border-color .15s}
 .search-wrap input:focus{border-color:#ffffff30}
 .search-wrap input::placeholder{color:var(--muted)}
 .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
 
-/* table */
 .tbl-wrap{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:2rem}
 .tbl-header{padding:.7rem 1.25rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .tbl-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
@@ -84,7 +78,6 @@ tbody tr:hover td{background:#ffffff04}
 td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px}
 .no-result{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
 
-/* badges */
 .badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
 .bm{background:var(--blue-dim);color:var(--blue)}
 .bf{background:var(--pink-dim);color:var(--pink)}
@@ -98,7 +91,6 @@ td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px}
 .bpay:hover{background:var(--orange);color:#fff}
 .b-bg{background:var(--purple-dim);color:var(--purple)}
 
-/* detail modal */
 .modal-overlay{display:none;position:fixed;inset:0;background:#000000cc;z-index:100;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
@@ -131,7 +123,6 @@ footer span{color:var(--orange)}
 
   <div class="metrics" id="metrics"></div>
   <div class="charts-row" id="charts"></div>
-
   <div class="filters" id="filters"></div>
 
   <div class="search-wrap">
@@ -146,9 +137,7 @@ footer span{color:var(--orange)}
     </div>
     <div class="tbl-scroll">
       <table>
-        <thead>
-          <tr id="thead"></tr>
-        </thead>
+        <thead><tr id="thead"></tr></thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
@@ -157,7 +146,6 @@ footer span{color:var(--orange)}
   <footer>Mini Marathon Fest'26 &nbsp;·&nbsp; Perambalur &nbsp;·&nbsp; <span>7Kettimelam Eeventmanagement</span></footer>
 </div>
 
-<!-- Detail Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
     <div class="modal-head">
@@ -184,12 +172,31 @@ const DATA = [
   {ts:"31/05/2026 14:44",name:"S. Vithya",age:31,gender:"Female",whatsapp:"9786072149",emergency:"9626460354",blood:"O+",email:"Vithyasenthilkumar69@gmail.com",address:"202, East Street, Venganur Post, Udumbiyam, Veppanthattai Taluk, Perambalur-621116",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"Normal",payment:"https://drive.google.com/open?id=11FUOc6N_2h82Tx7c6SByA318oNuRV6ue"},
   {ts:"31/05/2026 14:45",name:"U. Manikandan",age:36,gender:"Male",whatsapp:"9524362307",emergency:"8807212391",blood:"A+",email:"umapathymanigandan@gmail.com",address:"PN Palayam 5th Ward, Mellpattambakkam & Post, Panruti TK, Cuddalore District",category:"Adult",distance:"4 Km",tshirt:"L",medical:"Nil",payment:"https://drive.google.com/open?id=1lwiFlBMs3qu8oGgHP5HpHGJDZat1T3zc"},
   {ts:"31/05/2026 15:37",name:"YUVAN S",age:12,gender:"Male",whatsapp:"8300750585",emergency:"8300750585",blood:"O+",email:"niveyuvan@gmail.com",address:"No. 3 Abhiramapuram, Opp. Collector Office Road, Perambalur-621212",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1H0__55jsK5PFjCY-ndIP9O9X-z-GP1Ak"},
+  {ts:"02/06/2026 14:05",name:"Jagadeesh (1)",age:17,gender:"Male",whatsapp:"9585466031",emergency:"9585466031",blood:"B+",email:"rajaakila13@gmail.com",address:"Aranguar, Karuppaya Temple St, Vagaiyur PO, Tittakudi TK, Cuddalore Dt 606106",category:"Adult",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=11nqBZyRFGUI_Z89LaJ_CBFTriMMAuiMX"},
+  {ts:"02/06/2026 14:11",name:"Jagadeesh (2)",age:17,gender:"Male",whatsapp:"9585466031",emergency:"9585466031",blood:"B+",email:"rajaakila13@gmail.com",address:"Aranguar, Karuppaya Temple St, Vagaiyur PO, Tittakudi TK, Cuddalore Dt 606106",category:"Adult",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1fV9uunzJNOJF_FBUh1RvUT6Wbajb4Qxd"},
+  {ts:"02/06/2026 21:24",name:"Aathmeega T",age:6,gender:"Female",whatsapp:"9677924270",emergency:"9786420139",blood:"O+",email:"sarnithapriya@gmail.com",address:"158/34A Abiramapuram West, Perambalur Taluka, Perambalur 621212",category:"Kids",distance:"2 Km",tshirt:"XS",medical:"No",payment:"https://drive.google.com/open?id=1IA8dgJWO0td5wKMFoVfd7h37QFqgX4g7"},
+  {ts:"02/06/2026 21:35",name:"M.B. Dharikaa",age:10,gender:"Female",whatsapp:"9600769525",emergency:"9600769525",blood:"AB+",email:"sarnithapriya@gmail.com",address:"73 Big South Street Old Bus Stand, Perambalur",category:"Kids",distance:"2 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=1HkQksDdBSZiCST169womC8be7iTBe-N9"},
+  {ts:"03/06/2026 11:48",name:"Priyanka Udhayasuriyan (1)",age:31,gender:"Female",whatsapp:"9384489127",emergency:"7540004127",blood:"O+",email:"sweetykiddo11@gmail.com",address:"1/213 Ramalinga Nagar, Chinnaru, Eraiyur PO, Veppanthattai, Perambalur",category:"Adult",distance:"4 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=1UeihkCZIvZnopBi8ELNAfWPfI7o1ORpT"},
+  {ts:"03/06/2026 11:52",name:"Priyanka Udhayasuriyan (2)",age:31,gender:"Female",whatsapp:"9384489127",emergency:"7540004127",blood:"O+",email:"sweetykiddo11@gmail.com",address:"1/213 Ramalinga Nagar, Chinnaru, Eraiyur PO, Veppanthattai, Perambalur",category:"Adult",distance:"4 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=1-rfXWeJbZ9VwehtoiZQWiWoo1QKg7at3"},
+  {ts:"03/06/2026 21:14",name:"M. Sumira",age:6,gender:"Female",whatsapp:"9487685889",emergency:"9585074810",blood:"B+",email:"m.sumira2020@gmail.com",address:"10/124 Vadakku Madhavi Road, VIP Nagar, Perambalur",category:"Kids",distance:"2 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=1uxFQEmQezROBF9bXCeS9naiNO8UFUh61"},
+  {ts:"04/06/2026 11:58",name:"SANTHOSH R",age:19,gender:"Male",whatsapp:"9597461248",emergency:"9786781248",blood:"O+",email:"rsanthosh06122006@gmail.com",address:"1/56, North Street, Therani",category:"Adult",distance:"4 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=131osqz0M_Vfnq47QF8CDRqIhp-XDVyyY"},
+  {ts:"04/06/2026 19:42",name:"M R Kesav",age:12,gender:"Male",whatsapp:"9787871471",emergency:"9787871471",blood:"B+",email:"gkm5353@gmail.com",address:"107/Z15, GKM Illam, KK Nagar, Thourimangalam PO, Perambalur",category:"Kids",distance:"2 Km",tshirt:"XS",medical:"No",payment:"https://drive.google.com/open?id=1LPowRymiwu80Ys-iZah1E6feqZ2FXaEO"},
+  {ts:"04/06/2026 21:34",name:"E. Akash",age:12,gender:"Male",whatsapp:"9003016403",emergency:"9003016403",blood:"A+",email:"—",address:"Middle Street, Tholudur, Cuddalore Dt",category:"Kids",distance:"2 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=1FrbbYbLpnqKS4h_3AoTC9fCCSeyTMOIc"},
+  {ts:"04/06/2026 21:47",name:"R. Priyadharshini (1)",age:14,gender:"Female",whatsapp:"7530068641",emergency:"7530068641",blood:"B+",email:"priyadharshini20082012@gmail.com",address:"386, South St, Tholudur PO, Tittagudi TK, Cuddalore Dt 606303",category:"Kids",distance:"2 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=1dNoA1GyoM2R-FvPqCas8ESCX11249S_9"},
+  {ts:"04/06/2026 21:51",name:"R. Priyadharshini (2)",age:14,gender:"Female",whatsapp:"7530068641",emergency:"7530068641",blood:"B+",email:"priyadharshini20082012@gmail.com",address:"386, South St, Tholudur PO, Tittagudi TK, Cuddalore Dt 606303",category:"Kids",distance:"2 Km",tshirt:"L",medical:"Full fit",payment:"https://drive.google.com/open?id=1A3Lg0SOhijBwD4Zp_ocJRHElr3xHWESc"},
+  {ts:"05/06/2026 13:57",name:"Arafath A",age:6,gender:"Male",whatsapp:"7639080198",emergency:"7639080198",blood:"B+",email:"sameerasirajudeen97@gmail.com",address:"62/E2 Matharasa Road, Perambalur",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1BUxW0JSe2DK8kaE0w787ecPM7ykJRzYx"},
+  {ts:"05/06/2026 14:29",name:"A. Yashwin",age:8,gender:"Male",whatsapp:"7010234317",emergency:"7010234317",blood:"A+",email:"—",address:"1/171, Pillayar Kovil Street, Sirugudal, Kunnam TK, Perambalur Dt 621112",category:"Kids",distance:"2 Km",tshirt:"S",medical:"Normal",payment:"https://drive.google.com/open?id=1--x0MaO478kPu6baPEXWsazdZ7PFPB-p"},
+  {ts:"05/06/2026 15:51",name:"Harshiya",age:30,gender:"Female",whatsapp:"8438468284",emergency:"8438468284",blood:"A+",email:"arsha.4868@gmail.com",address:"Elambalur Road, Muthu Nagar, Perambalur",category:"Adult",distance:"4 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1Sym8L7Ks4TKz9ZxOrXBi0hiLhuSbxkHF"},
+  {ts:"05/06/2026 21:48",name:"Priya Velladurai",age:32,gender:"Female",whatsapp:"9751945561",emergency:"9751945561",blood:"O-",email:"priyakannathasan825@gmail.com",address:"4 Road, Perambalur",category:"Adult",distance:"4 Km",tshirt:"XS",medical:"No",payment:"https://drive.google.com/open?id=12FgW4cv4RIxD-gRg4hFNvlJBzuaL6iQW"},
+  {ts:"06/06/2026 13:09",name:"P.S. Kanishkan",age:12,gender:"Male",whatsapp:"9791764575",emergency:"9791817321",blood:"A+",email:"Sivasankarisivasankari827@gmail.com",address:"Anna Nagar 3rd Ward, Sengunam Post, Perambalur Dt 621220",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1NtE_geQH1SGUEvB_LkRdFOTIr53eHqxa"},
+  {ts:"06/06/2026 14:29",name:"G. Shasha",age:11,gender:"Female",whatsapp:"9626968535",emergency:"9786384184",blood:"O+",email:"poovarasi.1991@gmail.com",address:"2/258, Middle Street, Eriyur, Chinnasalem TK, Kallakurichi Dt 606204",category:"Kids",distance:"2 Km",tshirt:"XS",medical:"No",payment:"https://drive.google.com/open?id=1Q2Zfnp299Z4iBoUlTJH3TAdcJPqxsBck"},
 ];
 
-const SIZES = ["S","M","L","XL"];
-const BLOOD = ["A+","A-","B+","B-","AB+","AB-","O+","O-"];
-const SIZE_C = {S:"#a78bfa",M:"#3de68a",L:"#ffbe3d",XL:"#ff6b35"};
-const BLOOD_C = {"A+":"#ff4d8d","A-":"#ff4d8d","B+":"#4a9eff","B-":"#4a9eff","AB+":"#a78bfa","AB-":"#a78bfa","O+":"#3de68a","O-":"#3de68a"};
+const SIZES = ["XS","S","M","L","XL"];
+const BLOOD = ["A+","A-","B+","B-","AB+","AB-","O+","O-","O-"];
+const BLOOD_UNIQUE = [...new Set(BLOOD)];
+const SIZE_C = {XS:"#c084fc",S:"#a78bfa",M:"#3de68a",L:"#ffbe3d",XL:"#ff6b35"};
+const BLOOD_C = {"A+":"#ff4d8d","A-":"#ff4d8d","B+":"#4a9eff","B-":"#4a9eff","AB+":"#a78bfa","AB-":"#a78bfa","O+":"#3de68a","O-":"#2dd4bf"};
 
 let filters = {gender:"All",category:"All",tshirt:"All",blood:"All"};
 let sortKey = "ts", sortDir = 1;
@@ -200,8 +207,8 @@ function cnt(arr,k){return arr.reduce((a,r)=>{a[r[k]]=(a[r[k]]||0)+1;return a;},
 
 function medBadge(m){
   const v=(m||"").toLowerCase().trim();
-  if(!v||v==="no"||v==="nil"||v==="none") return `<span class="badge bmed-no">None</span>`;
-  if(v==="normal"||v==="good") return `<span class="badge bmed-norm">${m}</span>`;
+  if(!v||v==="no"||v==="nil"||v==="none"||v==="noo") return `<span class="badge bmed-no">None</span>`;
+  if(v==="normal"||v==="good"||v==="full fit") return `<span class="badge bmed-norm">${m}</span>`;
   return `<span class="badge bmed-yes">${m}</span>`;
 }
 
@@ -224,8 +231,7 @@ function filtered(){
 function setFilter(k,v){
   filters[k]=v;
   document.querySelectorAll(`.frow[data-key="${k}"] .fbtn`).forEach(b=>b.classList.toggle('on',b.dataset.val===v));
-  document.getElementById('clrBtn').style.display=
-    Object.values(filters).some(x=>x!=='All')?'':'none';
+  document.getElementById('clrBtn').style.display=Object.values(filters).some(x=>x!=='All')?'':'none';
   render();
 }
 
@@ -303,6 +309,9 @@ function render(){
       <span class="bar-n">${counts[l]||0}</span>
     </div>`).join('');
 
+  const existSizes = SIZES.filter(s=>allTC[s]);
+  const existBloods = BLOOD_UNIQUE.filter(b=>allBC[b]);
+
   document.getElementById('charts').innerHTML=`
     <div class="chart-card">
       <div class="chart-title">Gender</div>
@@ -314,11 +323,11 @@ function render(){
     </div>
     <div class="chart-card">
       <div class="chart-title">T-shirt size</div>
-      ${brows(SIZES.filter(s=>allTC[s]),tc,maxT,l=>SIZE_C[l]||'#888')}
+      ${brows(existSizes,tc,maxT,l=>SIZE_C[l]||'#888')}
     </div>
     <div class="chart-card">
       <div class="chart-title">Blood group</div>
-      ${brows(BLOOD.filter(b=>allBC[b]),bc,maxB,l=>BLOOD_C[l]||'#888')}
+      ${brows(existBloods,bc,maxB,l=>BLOOD_C[l]||'#888')}
     </div>`;
 
   // filters
@@ -330,8 +339,8 @@ function render(){
   document.getElementById('filters').innerHTML=
     mkRow('gender','Gender',['Male','Female'])+
     mkRow('category','Category',['Adult','Kids'])+
-    mkRow('tshirt','T-Shirt',SIZES)+
-    mkRow('blood','Blood',BLOOD)+
+    mkRow('tshirt','T-Shirt',existSizes)+
+    mkRow('blood','Blood',existBloods)+
     `<div style="text-align:right;margin-top:6px"><button class="clrbtn" id="clrBtn" style="display:${Object.values(filters).some(x=>x!=='All')?'':'none'}" onclick="clearFilters()">✕ Clear all filters</button></div>`;
 
   // thead
