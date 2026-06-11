@@ -22,21 +22,17 @@
 }
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;font-size:14px;line-height:1.5}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0}
-
 .wrap{max-width:1200px;margin:0 auto;padding:2rem 1.25rem;position:relative;z-index:1}
-
 .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:6px}
 h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:.04em;line-height:1;color:var(--text)}
 h1 span{color:var(--orange)}
 .subtitle{color:var(--muted);font-size:13px;margin-top:6px}
 .gen-time{font-size:11px;color:var(--hint);margin-top:3px}
-
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:2rem 0 1.5rem}
 .metric{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:.9rem 1rem;overflow:hidden;position:relative}
 .metric::after{content:'';position:absolute;inset:0;background:var(--ac-dim);pointer-events:none}
 .metric-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em;color:var(--ac);display:block;line-height:1}
 .metric-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
-
 .charts-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
 .chart-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);padding:1.1rem}
 .chart-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:.9rem}
@@ -45,7 +41,6 @@ h1 span{color:var(--orange)}
 .bar-track{flex:1;background:#ffffff0d;border-radius:4px;height:9px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
 .bar-n{font-size:12px;color:var(--muted);min-width:18px;text-align:right}
-
 .filters{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:1.25rem}
 .frow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:7px}
 .frow:last-child{margin-bottom:0}
@@ -55,13 +50,11 @@ h1 span{color:var(--orange)}
 .fbtn.on{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:600}
 .clrbtn{margin-left:auto;border:0.5px solid var(--border);background:transparent;color:var(--muted);padding:3px 11px;border-radius:100px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;transition:all .15s;line-height:1.6}
 .clrbtn:hover{color:var(--orange);border-color:var(--orange)}
-
 .search-wrap{margin-bottom:1.25rem;position:relative}
 .search-wrap input{width:100%;background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 14px 9px 36px;outline:none;transition:border-color .15s}
 .search-wrap input:focus{border-color:#ffffff30}
 .search-wrap input::placeholder{color:var(--muted)}
 .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
-
 .tbl-wrap{background:var(--card);border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:2rem}
 .tbl-header{padding:.7rem 1.25rem;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .tbl-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
@@ -77,7 +70,6 @@ tbody tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:#ffffff04}
 td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px}
 .no-result{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
-
 .badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
 .bm{background:var(--blue-dim);color:var(--blue)}
 .bf{background:var(--pink-dim);color:var(--pink)}
@@ -90,7 +82,6 @@ td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px}
 .bpay{display:inline-flex;align-items:center;gap:4px;background:var(--orange-dim);color:var(--orange);padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600;text-decoration:none;cursor:pointer}
 .bpay:hover{background:var(--orange);color:#fff}
 .b-bg{background:var(--purple-dim);color:var(--purple)}
-
 .modal-overlay{display:none;position:fixed;inset:0;background:#000000cc;z-index:100;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
@@ -104,48 +95,37 @@ td.wrap-cell{white-space:normal;word-break:break-word;max-width:180px}
 .detail-item.full{grid-column:1/-1}
 .detail-key{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
 .detail-val{font-size:13px;color:var(--text);word-break:break-word}
-
 footer{text-align:center;font-size:11px;color:var(--muted);padding-bottom:2rem}
 footer span{color:var(--orange)}
-
 @media(max-width:640px){.detail-grid{grid-template-columns:1fr}.charts-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <header style="margin-bottom:1.5rem">
     <div class="eyebrow">Perambalur · June 28, 2026</div>
     <h1>Mini Marathon <span>Fest'26</span></h1>
     <div class="subtitle">Registration Report — All Fields</div>
     <div class="gen-time" id="genTime"></div>
   </header>
-
   <div class="metrics" id="metrics"></div>
   <div class="charts-row" id="charts"></div>
   <div class="filters" id="filters"></div>
-
   <div class="search-wrap">
     <span class="search-icon">⌕</span>
     <input type="text" id="searchBox" placeholder="Search by name, address, email, blood group…" oninput="render()">
   </div>
-
   <div class="tbl-wrap">
     <div class="tbl-header">
       <span class="tbl-title">All Participants</span>
       <span class="tbl-count" id="tblCount"></span>
     </div>
     <div class="tbl-scroll">
-      <table>
-        <thead><tr id="thead"></tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
+      <table><thead><tr id="thead"></tr></thead><tbody id="tbody"></tbody></table>
     </div>
   </div>
-
   <footer>Mini Marathon Fest'26 &nbsp;·&nbsp; Perambalur &nbsp;·&nbsp; <span>Kettimelam Eeventmanagement</span></footer>
 </div>
-
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
     <div class="modal-head">
@@ -155,7 +135,6 @@ footer span{color:var(--orange)}
     <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
-
 <script>
 const DATA = [
   {ts:"15/05/2026 23:05",name:"Sample",age:35,gender:"Male",whatsapp:"9994247469",emergency:"7708231559",blood:"A+",email:"physicaldir@gmail.com",address:"Melapuliyur post perambalur district",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"No",payment:"https://drive.google.com/open?id=1mhVENCyd2H_KNP79EGgam_fSX4mmzGqU"},
@@ -190,12 +169,44 @@ const DATA = [
   {ts:"05/06/2026 21:48",name:"Priya Velladurai",age:32,gender:"Female",whatsapp:"9751945561",emergency:"9751945561",blood:"O-",email:"priyakannathasan825@gmail.com",address:"4 Road, Perambalur",category:"Adult",distance:"4 Km",tshirt:"XS",medical:"No",payment:"https://drive.google.com/open?id=12FgW4cv4RIxD-gRg4hFNvlJBzuaL6iQW"},
   {ts:"06/06/2026 13:09",name:"P.S. Kanishkan",age:12,gender:"Male",whatsapp:"9791764575",emergency:"9791817321",blood:"A+",email:"Sivasankarisivasankari827@gmail.com",address:"Anna Nagar 3rd Ward, Sengunam Post, Perambalur Dt 621220",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1NtE_geQH1SGUEvB_LkRdFOTIr53eHqxa"},
   {ts:"06/06/2026 14:29",name:"G. Shasha",age:11,gender:"Female",whatsapp:"9626968535",emergency:"9786384184",blood:"O+",email:"poovarasi.1991@gmail.com",address:"2/258, Middle Street, Eriyur, Chinnasalem TK, Kallakurichi Dt 606204",category:"Kids",distance:"2 Km",tshirt:"XS",medical:"No",payment:"https://drive.google.com/open?id=1Q2Zfnp299Z4iBoUlTJH3TAdcJPqxsBck"},
+  {ts:"06/06/2026 22:12",name:"M. Dharshwin (1)",age:10,gender:"Male",whatsapp:"8838742957",emergency:"8838742957",blood:"O+",email:"Bavimani29@gmail.com",address:"Maruvathur, Middle Street, Maruvathur PO, Kunnam TK, Perambalur Dt 621708",category:"Kids",distance:"2 Km",tshirt:"XXL",medical:"No",payment:"https://drive.google.com/open?id=1_rZiZZ5R006F5SphPKNAhPClBfn_N7U8"},
+  {ts:"06/06/2026 23:02",name:"Dinesh R",age:12,gender:"Male",whatsapp:"9994209698",emergency:"9994209698",blood:"AB+",email:"rameshajantha8389@gmail.com",address:"384, South St, Tholudur PO, Cuddalore 606303",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=11EsB3bJT16dTSEteDrysVJxj6QQXzwiE"},
+  {ts:"06/06/2026 23:10",name:"Monishwaran R",age:10,gender:"Male",whatsapp:"9994209698",emergency:"9994209698",blood:"B+",email:"rameshajantha8389@gmail.com",address:"384, South St, Tholudur PO, Cuddalore Dt 606303",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1Vm7bLk1Vv5yImDHzEhgKmiyx6ZmB8F3z"},
+  {ts:"07/06/2026 10:09",name:"M. Dharshwin (2)",age:10,gender:"Male",whatsapp:"8838742957",emergency:"8838742957",blood:"O+",email:"Bavimani29@gmail.com",address:"Maruvathur, Middle St, Maruvathur PO, Kunnam TK, Perambalur Dt 621708",category:"Kids",distance:"2 Km",tshirt:"XL",medical:"No",payment:"https://drive.google.com/open?id=1evSROjCL8DzkXuB1M7SAE38zitJraJ5P"},
+  {ts:"07/06/2026 14:10",name:"V. Lishanth",age:9,gender:"Male",whatsapp:"7867959328",emergency:"7867959328",blood:"B+",email:"—",address:"2/233, South Street, Anthur, Varagur PO, Kunnam TK, Perambalur Dt",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1PaweJ-topyCLGJZMpcDKHv57J45CSjqx"},
+  {ts:"07/06/2026 17:41",name:"N. Dhinagar",age:36,gender:"Male",whatsapp:"8610247353",emergency:"8015500844",blood:"A+",email:"Nsthina@gmail.com",address:"43, Thiruvalluvar Street, Aranarai, Perambalur",category:"Adult",distance:"4 Km",tshirt:"XXL",medical:"No",payment:"https://drive.google.com/open?id=1Q-JfczHwbvWan4G-gNc5G5ZKHosDf4AZ"},
+  {ts:"07/06/2026 17:44",name:"Mahizhavan",age:15,gender:"Male",whatsapp:"9514344631",emergency:"8015500844",blood:"A+",email:"Nsthina@gmail.com",address:"43, Thiruvalluvar Street, Aranarai, Perambalur",category:"Kids",distance:"2 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=1CyBanHoORtQtZb_Jk5ObJAt8AL52hC-V"},
+  {ts:"07/06/2026 19:35",name:"M. Harish",age:14,gender:"Male",whatsapp:"9578007706",emergency:"9578007706",blood:"O+",email:"rekhamanimaran295@gmail.com",address:"Srimushnam, Cuddalore District",category:"Kids",distance:"2 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=1IYy7O-biPoXUwEmhZQUAcCPsV98JDv0Y"},
+  {ts:"08/06/2026 00:36",name:"Thirugnanam",age:40,gender:"Male",whatsapp:"8608987588",emergency:"9443219565",blood:"O-",email:"knnnthiru@gmail.com",address:"3 Teachers Colony, 1st West Street, Bagalur Road, Hosur",category:"Adult",distance:"4 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=17n7C0bCUlvJN60GvKPH1VW7-ZZMCGhgw"},
+  {ts:"08/06/2026 09:45",name:"T.A. Thakshana",age:7,gender:"Female",whatsapp:"7540021274",emergency:"9566698285",blood:"O+",email:"cthiyagu139@gmail.com",address:"31Z/11L, 21 Ward, Poompozhil Nagar, Aranarai North, Thuraiyur Road, Perambalur 621212",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1UgM_Ty9688IeFQMulu9lIxp9yv57ah5S"},
+  {ts:"08/06/2026 20:20",name:"Subina",age:11,gender:"Female",whatsapp:"7358960511",emergency:"7358960511",blood:"A+",email:"ananthi75973email@gmail.com",address:"Arumadal MGR Street",category:"Kids",distance:"2 Km",tshirt:"M",medical:"Normal",payment:"https://drive.google.com/open?id=16R5i39K5sqSbAUHWV3_1zZ4LdxEa4dFf"},
+  {ts:"08/06/2026 20:22",name:"Ananthi",age:28,gender:"Female",whatsapp:"7358960511",emergency:"7358960511",blood:"O+",email:"ananthi75973email@gmail.com",address:"Arumadal MGR Street",category:"Adult",distance:"4 Km",tshirt:"XXL",medical:"Normal",payment:"https://drive.google.com/open?id=1BO9p6BgfAZVrpBodIHYBrX3h5VFAX4GD"},
+  {ts:"08/06/2026 23:46",name:"Madhan Kumar V (1)",age:18,gender:"Male",whatsapp:"7598291050",emergency:"9787313218",blood:"O+",email:"madhankumarvadivel1@gmail.com",address:"794A Vallal Gumanan Street, Elambalur Samathuvapuram",category:"Adult",distance:"4 Km",tshirt:"L",medical:"Alright",payment:"https://drive.google.com/open?id=1NIP6mcXi4tpZ0P10aFZ7Qi38EAnO2o8Y"},
+  {ts:"08/06/2026 23:49",name:"Madhan Kumar V (2)",age:18,gender:"Male",whatsapp:"7598291050",emergency:"9787313218",blood:"O+",email:"madhankumarvadivel1@gmail.com",address:"794A Vallal Gumanan Street, Elambalur Samathuvapuram",category:"Adult",distance:"4 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=1abWQWr7wsCrPuqpkgptuIfrIr_IvBCMW"},
+  {ts:"09/06/2026 11:30",name:"S. Aadhish",age:8,gender:"Male",whatsapp:"9344003841",emergency:"9344003841",blood:"B+",email:"aadhishaanadhi1111@gmail.com",address:"2/77, Eluthur Post, Tittakudi Taluk, Cuddalore District",category:"Kids",distance:"2 Km",tshirt:"S",medical:"Nil",payment:"https://drive.google.com/open?id=1pxOlvn1qFJeOVzLEKuTub9ZonzJDp1wX"},
+  {ts:"09/06/2026 12:48",name:"Manikandan",age:23,gender:"Male",whatsapp:"8344614703",emergency:"9344614703",blood:"B+",email:"manimani44231@gmail.com",address:"Siruvayalur Road, Mangoon",category:"Adult",distance:"4 Km",tshirt:"L",medical:"Normal",payment:"https://drive.google.com/open?id=14iBuy1GH5Es4Wzb9q2ZvevXyMKFf2Az7"},
+  {ts:"09/06/2026 13:53",name:"Venkatesh Nagaraj",age:25,gender:"Male",whatsapp:"6381276783",emergency:"9655194443",blood:"B+",email:"venkatesh6381276783@gmail.com",address:"1/258i Mariamman Kovil Street, Noothappur PO, Veppanthattai TK, Perambalur Dt 621117",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"Good",payment:"https://drive.google.com/open?id=1hJBX7j1vZHK3ubCZ2KA6hxJWpI7d1KLi"},
+  {ts:"09/06/2026 14:53",name:"Naveenkumar",age:28,gender:"Male",whatsapp:"9600742651",emergency:"9944943297",blood:"B+",email:"naveensattai@gmail.com",address:"Namakkal",category:"Adult",distance:"4 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=1Xmox_r_dHzCVQWuhFezVcmRuX0GkMkOd"},
+  {ts:"09/06/2026 15:28",name:"T. Selvamojith",age:10,gender:"Female",whatsapp:"9361054746",emergency:"9361054746",blood:"O-",email:"—",address:"2/261 Middle Street, Veppanthattai PO & TLK, Perambalur Dts",category:"Kids",distance:"2 Km",tshirt:"S",medical:"Good",payment:"https://drive.google.com/open?id=1yPzrC-StnwuY1jDdtMrPXTXPuaNAUVy7"},
+  {ts:"09/06/2026 18:37",name:"Ragulan R",age:12,gender:"Male",whatsapp:"9943344390",emergency:"8098125022",blood:"O+",email:"ramsaranx40@gmail.com",address:"Arumadal Village, Sengunam Post, Perambalur TK & Dt 621220",category:"Kids",distance:"2 Km",tshirt:"M",medical:"Fit",payment:"https://drive.google.com/open?id=10_EsJ0CGj5joFzZTrnUbcxEA1aD5D8A5"},
+  {ts:"09/06/2026 20:00",name:"Liyauddeen",age:7,gender:"Male",whatsapp:"9751194346",emergency:"9159887048",blood:"B+",email:"jakkariyas86@gmail.com",address:"Vadakkumathavi Road, Samiyappa 2nd Cross, Perambalur",category:"Kids",distance:"2 Km",tshirt:"M",medical:"Good",payment:"https://drive.google.com/open?id=1gSkGeMG-JltTJSVVYwDS8vdCE_ikdef5"},
+  {ts:"09/06/2026 23:00",name:"K. Pradeep (1)",age:15,gender:"Male",whatsapp:"9655219986",emergency:"9047523374",blood:"AB-",email:"c81652413@gmail.com",address:"Perambalur MG Hospital back side near Palpanai",category:"Adult",distance:"4 Km",tshirt:"M",medical:"Normal",payment:"https://drive.google.com/open?id=14x5Mg8kOWRJwP4-lv-chSFIkJg7sEN8D"},
+  {ts:"09/06/2026 23:21",name:"K. Pradeep (2)",age:15,gender:"Male",whatsapp:"9655219986",emergency:"9047523374",blood:"AB-",email:"c81652413@gmail.com",address:"Perambalur MG Hospital back side near Palpanai",category:"Adult",distance:"4 Km",tshirt:"M",medical:"Normal",payment:"https://drive.google.com/open?id=1mHVhe8-Z5lTrTqr9BNMAISOpoXIuTg-T"},
+  {ts:"10/06/2026 15:37",name:"S. YOGESHWARAN",age:19,gender:"Male",whatsapp:"9442223262",emergency:"8300940402",blood:"B+",email:"yw862449@gmail.com",address:"14C Maruthaiyan Kovil Street, Veppanthattai, Arumbavur",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"No",payment:"https://drive.google.com/open?id=1tLZsU_AgO6-sPYKAAky1JJE6BmbSKfB7"},
+  {ts:"10/06/2026 15:46",name:"G Rohith",age:11,gender:"Male",whatsapp:"9884426722",emergency:"9884426722",blood:"O+",email:"rlakshmi477@gmail.com",address:"4/138, East Street, Navalur, Melapuliyur PO, Perambalur-621101",category:"Kids",distance:"2 Km",tshirt:"M",medical:"No",payment:"https://drive.google.com/open?id=1qhGsBYPxZuSac3xqm12YdO03rKKh0YXS"},
+  {ts:"10/06/2026 16:31",name:"Navin",age:11,gender:"Male",whatsapp:"6382324137",emergency:"9943344390",blood:"O+",email:"ramsaranx40@gmail.com",address:"Arumadal Village, Sengunam Post, Perambalur TK & Dt 621220",category:"Kids",distance:"2 Km",tshirt:"S",medical:"Ok",payment:"https://drive.google.com/open?id=1h_G49_lS8KfYyKIEHgEJtYCsvYmJtzzz"},
+  {ts:"10/06/2026 18:01",name:"K. Mehala",age:32,gender:"Female",whatsapp:"9629608789",emergency:"9994021958",blood:"O+",email:"mehla1853@gmail.com",address:"Shanmuga Nagar, Thuraiyur",category:"Adult",distance:"4 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=14Om8Pv0S9Eta9SKauXC7ETsbgBc2lL8R"},
+  {ts:"10/06/2026 19:19",name:"K.S. Hemanth",age:12,gender:"Male",whatsapp:"9384108113",emergency:"9047659890",blood:"B+",email:"mithrankarthikmithrankarthik@gmail.com",address:"Arakadu Street, Ranjankudi PO",category:"Kids",distance:"2 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=1z52nYdrq-bRzxueASMdAMap50uUBNM6X"},
+  {ts:"10/06/2026 20:39",name:"Bala Venkatesan",age:47,gender:"Male",whatsapp:"9843595253",emergency:"9843803444",blood:"B+",email:"balavenkatesan771@gmail.com",address:"13A/29A, Indira Nagar, Old Bus Stand Near, Perambalur",category:"Adult",distance:"4 Km",tshirt:"XL",medical:"Fit",payment:"https://drive.google.com/open?id=1eZs_feSJnsKSMleuU1YaTXpRfRkijXRA"},
+  {ts:"10/06/2026 21:13",name:"Abinesh A",age:12,gender:"Male",whatsapp:"9629746532",emergency:"9629746532",blood:"O+",email:"akileshalagendran@gmail.com",address:"Nearby Indian Oil, Siruvachu Main Road",category:"Kids",distance:"2 Km",tshirt:"L",medical:"No",payment:"https://drive.google.com/open?id=10LeMRj-BYA6wOdwP5l7wm144pqiZ6r_m"},
+  {ts:"10/06/2026 21:52",name:"Ra. Mohanraj",age:14,gender:"Male",whatsapp:"9626227160",emergency:"9626227160",blood:"A+",email:"—",address:"Indira Nagar, Mariamman Kovil Street, Elambalur, Perambalur",category:"Kids",distance:"2 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=1I3-TOa_J1AWxA3m8PzV5rgxvzQfMFgSq"},
+  {ts:"10/06/2026 22:33",name:"Gokulapriyan",age:14,gender:"Male",whatsapp:"9342145572",emergency:"8124300000",blood:"B+",email:"—",address:"Indhiranagar, Periyammapalayam",category:"Kids",distance:"2 Km",tshirt:"S",medical:"No",payment:"https://drive.google.com/open?id=19bnN3F8myw8cQ0KpTxqvfmci16OtPXwZ"},
+  {ts:"11/06/2026 00:04",name:"Mukunthan A",age:14,gender:"Male",whatsapp:"9566860125",emergency:"9566860125",blood:"O+",email:"eeanbu@gmail.com",address:"Anbu Illam, Avvai Street, Thoraimangalam, Perambalur",category:"Adult",distance:"4 Km",tshirt:"M",medical:"Nil",payment:"https://drive.google.com/open?id=1JG4rY0T07g2ug2G-kD6n3PNM4gIiqnbM"},
 ];
 
-const SIZES = ["XS","S","M","L","XL"];
-const BLOOD = ["A+","A-","B+","B-","AB+","AB-","O+","O-","O-"];
-const BLOOD_UNIQUE = [...new Set(BLOOD)];
-const SIZE_C = {XS:"#c084fc",S:"#a78bfa",M:"#3de68a",L:"#ffbe3d",XL:"#ff6b35"};
+const SIZES = ["XS","S","M","L","XL","XXL"];
+const BLOOD_UNIQUE = ["A+","A-","B+","B-","AB+","AB-","O+","O-"];
+const SIZE_C = {XS:"#c084fc",S:"#a78bfa",M:"#3de68a",L:"#ffbe3d",XL:"#ff6b35",XXL:"#ff5c5c"};
 const BLOOD_C = {"A+":"#ff4d8d","A-":"#ff4d8d","B+":"#4a9eff","B-":"#4a9eff","AB+":"#a78bfa","AB-":"#a78bfa","O+":"#3de68a","O-":"#2dd4bf"};
 
 let filters = {gender:"All",category:"All",tshirt:"All",blood:"All"};
@@ -208,7 +219,7 @@ function cnt(arr,k){return arr.reduce((a,r)=>{a[r[k]]=(a[r[k]]||0)+1;return a;},
 function medBadge(m){
   const v=(m||"").toLowerCase().trim();
   if(!v||v==="no"||v==="nil"||v==="none"||v==="noo") return `<span class="badge bmed-no">None</span>`;
-  if(v==="normal"||v==="good"||v==="full fit") return `<span class="badge bmed-norm">${m}</span>`;
+  if(["normal","good","full fit","alright","fit","ok","fitt"].includes(v)) return `<span class="badge bmed-norm">${m}</span>`;
   return `<span class="badge bmed-yes">${m}</span>`;
 }
 
@@ -287,7 +298,6 @@ function render(){
   const maxT=Math.max(...Object.values(allTC),1);
   const maxB=Math.max(...Object.values(allBC),1);
 
-  // metrics
   const mDefs=[
     {v:total,l:'Total',ac:'--orange',ad:'--orange-dim'},
     {v:gc.Male||0,l:'Male',ac:'--blue',ad:'--blue-dim'},
@@ -301,7 +311,6 @@ function render(){
       <div class="metric-lbl">${m.l}</div>
     </div>`).join('');
 
-  // charts
   const brows=(items,counts,maxV,colorFn)=>items.map(l=>`
     <div class="bar-row">
       <span class="bar-lbl" title="${l}">${l}</span>
@@ -313,24 +322,11 @@ function render(){
   const existBloods = BLOOD_UNIQUE.filter(b=>allBC[b]);
 
   document.getElementById('charts').innerHTML=`
-    <div class="chart-card">
-      <div class="chart-title">Gender</div>
-      ${brows(['Male','Female'],gc,maxG,l=>l==='Male'?'#4a9eff':'#ff4d8d')}
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Category</div>
-      ${brows(['Adult','Kids'],cc,maxC,l=>l==='Adult'?'#3de68a':'#ffbe3d')}
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">T-shirt size</div>
-      ${brows(existSizes,tc,maxT,l=>SIZE_C[l]||'#888')}
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Blood group</div>
-      ${brows(existBloods,bc,maxB,l=>BLOOD_C[l]||'#888')}
-    </div>`;
+    <div class="chart-card"><div class="chart-title">Gender</div>${brows(['Male','Female'],gc,maxG,l=>l==='Male'?'#4a9eff':'#ff4d8d')}</div>
+    <div class="chart-card"><div class="chart-title">Category</div>${brows(['Adult','Kids'],cc,maxC,l=>l==='Adult'?'#3de68a':'#ffbe3d')}</div>
+    <div class="chart-card"><div class="chart-title">T-shirt size</div>${brows(existSizes,tc,maxT,l=>SIZE_C[l]||'#888')}</div>
+    <div class="chart-card"><div class="chart-title">Blood group</div>${brows(existBloods,bc,maxB,l=>BLOOD_C[l]||'#888')}</div>`;
 
-  // filters
   const mkRow=(key,label,opts)=>`
     <div class="frow" data-key="${key}">
       <span class="flabel">${label}</span>
@@ -343,7 +339,6 @@ function render(){
     mkRow('blood','Blood',existBloods)+
     `<div style="text-align:right;margin-top:6px"><button class="clrbtn" id="clrBtn" style="display:${Object.values(filters).some(x=>x!=='All')?'':'none'}" onclick="clearFilters()">✕ Clear all filters</button></div>`;
 
-  // thead
   const cols=[
     {k:'ts',l:'Timestamp'},{k:'name',l:'Name'},{k:'age',l:'Age'},{k:'gender',l:'Gender'},
     {k:'blood',l:'Blood'},{k:'whatsapp',l:'WhatsApp'},{k:'emergency',l:'Emergency'},
@@ -355,7 +350,6 @@ function render(){
     c.k==='_detail'?`<th></th>`:`<th class="${sortKey===c.k?'sorted':''}" onclick="setSort('${c.k}')">${c.l}<span class="sort-icon">${sortKey===c.k?(sortDir===1?'▲':'▼'):'⇅'}</span></th>`
   ).join('');
 
-  // tbody
   document.getElementById('tblCount').textContent=`${total} of ${DATA.length} participants`;
   document.getElementById('tbody').innerHTML=d.length?d.map(r=>{
     const i=DATA.indexOf(r);
